@@ -114,7 +114,8 @@ AddEventHandler('inventory:server:OpenInventory', function(name, id, other)
 	local Player = QBCore.Functions.GetPlayer(src)
 	local PlayerAmmo = {}
 
-	QBCore.Functions.ExecuteSql(false, "SELECT * FROM `playerammo` WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'", function(ammo)
+	exports.oxmysql:execute("SELECT * FROM `playerammo` WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'", function(ammo)
+
 		if ammo[1] ~= nil then
 			PlayerAmmo = json.decode(ammo[1].ammo)
 		end
