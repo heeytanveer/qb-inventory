@@ -495,12 +495,6 @@ AddEventHandler("inventory:client:UseSnowball", function(amount)
     TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items["snowball"], "remove", 1)
 end)
 
--- local policeWeapons = {
--- 	[1] = 'weapon_pistol',
--- 	[2] = 'weapon_stungun',
---     [3] = 'weapon_smg',
---     [4] = 'weapon_pumpshotgun',
--- }
 
 RegisterNetEvent("inventory:client:UseWeapon")
 AddEventHandler("inventory:client:UseWeapon", function(weaponData, shootbool)
