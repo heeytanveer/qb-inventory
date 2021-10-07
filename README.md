@@ -31,7 +31,8 @@ AddEventHandler('weapons:server:AddWeaponAmmo', function(CurrentWeaponData, amou
     end
 end)
 ```
+## Video
+https://streamable.com/5tpgg0
 
-
-## Screenshots
+## Screenshot
 ![General](https://i.imgur.com/ThshhCp.png)
