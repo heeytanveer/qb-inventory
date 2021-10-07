@@ -112,13 +112,6 @@ RegisterServerEvent("inventory:server:OpenInventory")
 AddEventHandler('inventory:server:OpenInventory', function(name, id, other)
 	local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
-	local PlayerAmmo = {}
-
-	exports.oxmysql:execute("SELECT * FROM `playerammo` WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'", function(ammo)
-
-		if ammo[1] ~= nil then
-			PlayerAmmo = json.decode(ammo[1].ammo)
-		end
 
 		if name ~= nil and id ~= nil then
 			local secondInv = {}
@@ -313,11 +306,10 @@ AddEventHandler('inventory:server:OpenInventory', function(name, id, other)
 					--Drops[id].label = secondInv.label
 				end
 			end
-			TriggerClientEvent("inventory:client:OpenInventory", src, PlayerAmmo, Player.PlayerData.items, secondInv)
+			TriggerClientEvent("inventory:client:OpenInventory", src, {}, Player.PlayerData.items, secondInv)
 		else
-			TriggerClientEvent("inventory:client:OpenInventory", src, PlayerAmmo, Player.PlayerData.items)
+			TriggerClientEvent("inventory:client:OpenInventory", src, {}, Player.PlayerData.items)
 		end
-	end)
 end)
 
 RegisterServerEvent("inventory:server:SaveInventory")
