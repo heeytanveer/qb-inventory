@@ -6,7 +6,7 @@ This verison of qb-weapons allows ammo to save to database
 - https://github.com/dojwun/qb-weapons
 - Be sure to also import the playerammo.sql provided
 
-- Or you can just add the line of code below to your "weapons:server:AddWeaponAmmo" event in qb-weapons/server/main.lua
+- You can also just add the line of code below to your "weapons:server:AddWeaponAmmo" event in qb-weapons/server/main.lua
 
     ```
     exports.oxmysql:insert('INSERT INTO playerammo (citizenid, ammo) VALUES (?, ?)',{Player.PlayerData.citizenid,amount})
