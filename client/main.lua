@@ -48,7 +48,6 @@ end)
 RegisterNetEvent('weapons:client:SetCurrentWeapon')
 AddEventHandler('weapons:client:SetCurrentWeapon', function(data, bool)
     if data ~= false then
-        GiveWeapon(currentWeapon)
         CurrentWeaponData = data
     else
         CurrentWeaponData = {}
@@ -535,47 +534,28 @@ AddEventHandler("inventory:client:UseWeapon", function(weaponData, shootbool)
         TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
         currentWeapon = weaponName
     else
-        -- local policeWeapon = false
-        -- local jobName = QBCore.Functions.GetPlayerData().job 
-        -- for k,v in pairs(policeWeapons) do
-        --     if weaponName == v then
-        --         if jobName == "police" then
-        --             policeWeapon = false
-        --             break
-        --         else
-        --             QBCore.Functions.Notify("You are not authorized to use this weapon", "error")
-
-        --             policeWeapon = true
-        --             break
-        --         end
-        --     end
-        -- end
-        -- if policeWeapon == false then
-            TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
-            QBCore.Functions.TriggerCallback("weapon:server:GetWeaponAmmo", function(result)
-                local ammo = tonumber(result)
-                if weaponName == "weapon_petrolcan" or weaponName == "weapon_fireextinguisher" then 
-                    ammo = 4000 
+        TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
+        QBCore.Functions.TriggerCallback("weapon:server:GetWeaponAmmo", function(result)
+            GiveWeapon(currentWeapon)
+            local ammo = tonumber(result)
+            if weaponName == "weapon_petrolcan" or weaponName == "weapon_fireextinguisher" then 
+                ammo = 4000 
+            end
+            GiveWeaponToPed(ped, GetHashKey(weaponName), ammo, false, false)
+            TriggerEvent('qb-hud:client:ToggleWeaponMode', true)  
+            TriggerEvent('inventory:client:WeaponHolster', weaponData, currentWeapon)
+            SetPedAmmo(ped, GetHashKey(weaponName), ammo)
+            SetCurrentPedWeapon(ped, GetHashKey(weaponName), true)
+            if weaponData.info.attachments ~= nil then
+                for _, attachment in pairs(weaponData.info.attachments) do
+                    GiveWeaponComponentToPed(ped, GetHashKey(weaponName), GetHashKey(attachment.component))
                 end
-                Citizen.Wait(1600)
-    
-                GiveWeaponToPed(ped, GetHashKey(weaponName), ammo, false, false)
-                TriggerEvent('qb-hud:client:ToggleWeaponMode', true)  
-                TriggerEvent('inventory:client:WeaponHolster', weaponData, currentWeapon)
-    
-                SetPedAmmo(ped, GetHashKey(weaponName), ammo)
-                SetCurrentPedWeapon(ped, GetHashKey(weaponName), true)
-                if weaponData.info.attachments ~= nil then
-                    for _, attachment in pairs(weaponData.info.attachments) do
-                        GiveWeaponComponentToPed(ped, GetHashKey(weaponName), GetHashKey(attachment.component))
-                    end
-                end
-                if weaponName == "weapon_petrolcan" then
-                    TriggerEvent("fuel:SetJerryCan", weaponData)
-                end
-                currentWeapon = weaponName
-            end, CurrentWeaponData)
-        -- end
+            end
+            if weaponName == "weapon_petrolcan" then
+                TriggerEvent("fuel:SetJerryCan", weaponData)
+            end
+            currentWeapon = weaponName
+        end, CurrentWeaponData)
     end
 end)
 
