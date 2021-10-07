@@ -112,6 +112,14 @@ RegisterServerEvent("inventory:server:OpenInventory")
 AddEventHandler('inventory:server:OpenInventory', function(name, id, other)
 	local src = source
 	local Player = QBCore.Functions.GetPlayer(src)
+	
+	local PlayerAmmo = {}
+	exports.oxmysql:execute("SELECT * FROM `playerammo` WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'", function(ammo)
+		if ammo[1] ~= nil then
+			PlayerAmmo = json.decode(ammo[1].ammo)
+		end
+	end)
+
 	if name ~= nil and id ~= nil then
 		local secondInv = {}
 		if name == "stash" then
