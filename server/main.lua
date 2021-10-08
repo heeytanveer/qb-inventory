@@ -40,7 +40,7 @@ AddEventHandler('inventory:server:CraftItems', function(itemName, itemCosts, amo
 		for k, v in pairs(itemCosts) do
 			Player.Functions.RemoveItem(k, (v*amount))
 		end
-		Player.Functions.AddItem(itemName, amount, toSlot)
+		Player.Functions.AddItem(itemName, amount, toSlot, {["quality"] = 100})
 		Player.Functions.SetMetaData("craftingrep", Player.PlayerData.metadata["craftingrep"]+(points*amount))
 		TriggerClientEvent("inventory:client:UpdatePlayerInventory", src, false)
 	end
@@ -55,7 +55,7 @@ AddEventHandler('inventory:server:CraftAttachment', function(itemName, itemCosts
 		for k, v in pairs(itemCosts) do
 			Player.Functions.RemoveItem(k, (v*amount))
 		end
-		Player.Functions.AddItem(itemName, amount, toSlot)
+		Player.Functions.AddItem(itemName, amount, toSlot, {["quality"] = 100})
 		Player.Functions.SetMetaData("attachmentcraftingrep", Player.PlayerData.metadata["attachmentcraftingrep"]+(points*amount))
 		TriggerClientEvent("inventory:client:UpdatePlayerInventory", src, false)
 	end
@@ -1600,7 +1600,7 @@ QBCore.Commands.Add("randomitems", "Get some random items (for testing)", {}, fa
 		if randitem["unique"] then
 			amount = 1
 		end
-		if Player.Functions.AddItem(randitem["name"], amount) then
+		if Player.Functions.AddItem(randitem["name"], amount, slot, {["quality"] = 100}) then
 			TriggerClientEvent('inventory:client:ItemBox', source, QBCore.Shared.Items[randitem["name"]], 'add', amount)
             Citizen.Wait(500)
 		end
