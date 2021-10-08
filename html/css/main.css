@@ -641,7 +641,7 @@ body {
     left: -100vw;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(10,10,20,0.2);
 }
 
 .weapon-attachments-container-title {
@@ -680,7 +680,7 @@ body {
 .weapon-attachments-container-detail-durability-total {
     height: 100%;
     width: 50%;
-    background-color: rgb(39, 174, 96);
+    background-color: rgb(39, 174, 96); 
 }
 
 .weapon-attachments-container-image {
@@ -713,16 +713,18 @@ body {
     position: relative;
     height: 12.5vh;
     width: 10.5vh;
-    background-color: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgb(75, 75, 75);
+    background-color:#006aff05;
+    border: 1px solid rgba(220, 240, 220, 0.05);
+    border-radius: 5px;
     margin-right: 1vh;
     float: left;
     transition: .05s linear;
 }
 
 .weapon-attachment:hover {
-    background-color: rgba(0, 0, 0, 0.4);
-    border: 1px solid rgb(29, 29, 29);
+    background-color:#006aff05;
+    border: 1px solid rgba(220, 240, 220, 0.05);
+    border-radius: 5px;
     transition: .05s linear;
 }
 
@@ -730,18 +732,19 @@ body {
     position: absolute;
     bottom: 0;
     width: 100%;
-    background-color: rgba(var(--main-label-color), 0.3);
+    background-color: #191e25db;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px; 
     padding: 2.1%;
 }
 
 .weapon-attachment-label > p {
     color: #ffffff;
-    font-size: 1.1vh;
+    font-size: 0.8vh;
     text-align: center;
     text-transform: uppercase;
     line-height: 1.9vh;
-    font-family: 'Source Code Pro', monospace;
-    font-weight: 100;
+    font-family: 'Verdana Bold';
 }
 
 .weapon-attachment-img {
@@ -765,7 +768,7 @@ body {
     position: absolute;
     width: 6.5vh;
     height: 6.5vh;
-    background-color: rgb(15, 15, 15);
+    background-color: #30475e;
     border-radius: 1vh;
     margin: 0 auto;
     left: 0;
@@ -778,7 +781,7 @@ body {
 }
 
 .weapon-attachments-remove:hover {
-    background-color: rgb(18, 18, 18);
+    background-color: #47688a;
 }
 
 .weapon-attachments-remove > i {
@@ -786,7 +789,7 @@ body {
 }
 
 .weapon-attachments-remove-hover {
-    background-color: rgb(39, 174, 96);
+    background-color: rgba(139, 29, 29, 0.9);
 }
 
 .weapon-dragging-class {
@@ -815,8 +818,8 @@ body {
     width: 10vh;
     height: 6vh;
     margin: 5vh;
-    background-color: rgb(15, 15, 15);
-    border-radius: .2vh;
+    background-color: #30475e;
+    border-radius: 5px;
     text-align: center;
     line-height: 6vh;
     color: white;
@@ -825,7 +828,7 @@ body {
 }
 
 .weapon-attachments-back:hover {
-    background-color: rgb(18, 18, 18);
+    background-color: #47688a;
 }
 
 /*             ADDED               */
