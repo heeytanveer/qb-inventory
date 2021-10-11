@@ -2,7 +2,8 @@
 All Credits to go to the original qbcore-framework repository
 
 ## [W.I.P] Adding ammo to database [W.I.P]
-This verison of qb-weapons allows ammo to save to database 
+- This verison of qb-weapons allows ammo to save to database 
+- Mostly used for getting ammo values in qb-inventory tool tip
 - https://github.com/dojwun/qb-weapons
 
 ## Fix Uncaught TypeError 
