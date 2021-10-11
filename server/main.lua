@@ -1555,6 +1555,9 @@ QBCore.Commands.Add("giveitem", "Give item to a player", {{name="id", help="Plae
 						info.mealid = math.random(11111,99999)
 					elseif itemData["name"] == "labkey" then
 						info.lab = exports["qb-methlab"]:GenerateRandomLab()
+					elseif itemData["name"] == "burger-ticket" then
+						info.note = "Given by Dev - Dojwun"
+						info.price = math.random(1,2500)
 					elseif itemData["name"] == "phone" then
 						info.firstname = Player.PlayerData.charinfo.firstname
 						info.lastname = Player.PlayerData.charinfo.lastname
