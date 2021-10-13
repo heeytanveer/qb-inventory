@@ -322,7 +322,7 @@ Citizen.CreateThread(function()
                     local dist = #(pos - vector3(v.coords.x, v.coords.y, v.coords.z))
                     if dist < 6 then
                         DropsNear[k] = v
-                        if dist < 1.5 then
+                        if dist < 2.5 then
                             CurrentDrop = k
                         else
                             CurrentDrop = nil
