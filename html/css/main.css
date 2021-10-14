@@ -1175,3 +1175,27 @@ body {
     max-height: 100%;
 }
 
+.inv-option-rob > p {
+    color: white;
+    text-align: center;
+    line-height: 23px;
+    text-transform: uppercase;
+    font-size: 1.1vh;
+    font-family: Verdana;
+}
+
+.inv-option-rob {
+	width: 70%;
+	height: 25px;
+    top: -60%;
+    left: 6%;
+    position: absolute;
+    background-color:#30475e;
+    border: 1px solid rgba(220, 240, 220, 0.05);
+    color: #ffffff;
+    border-radius: 5px;
+}
+
+.inv-option-rob:hover {
+    background-color: #47688a;
+}
