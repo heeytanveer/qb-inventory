@@ -19,4 +19,4 @@ Player.Functions.AddItem(item, amount, slot, {["quality"] = 100})
 https://streamable.com/5tpgg0
 
 ## Screenshot
-![General](https://i.imgur.com/ThshhCp.png)
+![General](https://i.imgur.com/l48YeCC.png)
