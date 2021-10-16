@@ -175,7 +175,7 @@ $(document).on("click", ".item-slot", function(e){
             if ((ItemData.name).split("_")[0] == "weapon") {
                 if (!$("#weapon-attachments").length) {
                     // if (ItemData.info.attachments !== null && ItemData.info.attachments !== undefined && ItemData.info.attachments.length > 0) {
-                    $(".inv-options-list").append('<div style="height: 100%;background-color:#30475e;margin-top:150%" class="inv-option-item" id="weapon-attachments"><p>ATTACHMENTS</p></div>');
+                    $(".inv-options-list").append('<div style="height: 100%;background-color:#30475e;margin-top:170%" class="inv-option-item" id="weapon-attachments"><p>ATTACHMENTS</p></div>');
                     $("#weapon-attachments").hide().fadeIn(250);
                     ClickedItemData = ItemData;
                     // }
