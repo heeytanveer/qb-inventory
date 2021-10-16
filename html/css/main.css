@@ -146,8 +146,8 @@ body {
     left: 0;
     right: 0;
     width: 9%;
-    top: 48%;
-    left: 3vh;
+    top: 65.5%;
+    left: 2%;
 }
 
 
@@ -218,11 +218,12 @@ body {
 
 .btn-combine {
     position: relative;
-    margin-top: 20%;
+    margin-top: 10%;
     width: 80%;
     height: 50px;
-    background-color: rgba(120, 10, 20, 0.3); /* rgba(20, 20, 20, 0.5) */
-    border: 1px solid rgba(255, 255, 255, 0.01);
+    border-radius: 5px;
+    background-color:#30475e;
+    border: 1px solid rgba(220, 240, 220, 0.05);
     color: white;
     /* transition: background-color .1s linear; */
 }
@@ -237,7 +238,7 @@ body {
 }
 
 .btn-combine:hover {
-    background-color: rgba(120, 10, 20, 0.4); /* rgba(20, 20, 20, 0.5) */
+    background-color: #47688a;
 }
 
 .item-slot-amount {
