@@ -978,7 +978,8 @@ body {
 }
 
 .options-box {
-  background-color: #191e25db;
+    /* background-color: #191e25db; */
+  background-color: #191e25;
   border: 1px solid rgba(220, 240, 220, 0.05);
 
   width: 100%;
