@@ -6,6 +6,7 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
         <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -58,13 +59,21 @@
                         <!-- <div style="height: 100%;background-color:#30475e;margin-top:150%" class="inv-option-item" id="weapon-attachments"><p>ATTACHMENTS</p></div> DontUse-ClickWeaponInstead -->
 
 
-                        <div class="bottom-buttons"> 
-                            <span class="bottom-button settings-button" onclick="openHudMenu()"><i class="fas fa-cog"></i></span> 
-                            <span class="bottom-button help-button"
+                    <div class="bottom-buttons">
+                        <span class="bottom-button help-button"
                             onmouseover="$('.help-menu').fadeIn(370); $('.other-inventory').fadeOut();"
                             onmouseout="$('.help-menu').fadeOut(370); $('.other-inventory').fadeIn();">
-                            <i class="fas fa-info"></i></span>
-                        </div> 
+                            <i class="las la-info-circle"></i>
+                        </span>
+
+                        <span class="bottom-button settings-button" onclick="openHudMenu()">
+                            <i class="las la-cog"></i>
+                        </span>
+
+                        <span class="bottom-button clothing-button" id="clothing-menu">
+                            <i class="las la-tshirt"></i>
+                        </span>
+                    </div>
 
                     </div> 
                 </div>
@@ -105,6 +114,25 @@
                         <!-- <button type="button" onclick="$('.help-menu').fadeOut(); $('.other-inventory').fadeIn();">Close</button> -->
                     </div>
                     
+                    <div class="cloth" style="right:18%;position:absolute;top:30%">
+                        <img id="top" src="cloth/shirt.svg" onmouseover="$(this).attr('title', 'T-Shirt').tooltip()" />
+                        <br>
+                        <img id="vest" src="cloth/vest.svg" onmouseover="$(this).attr('title', 'Vest').tooltip()" />
+                        <br>
+                        <img id="pants" src="cloth/pants.svg" onmouseover="$(this).attr('title', 'Pants').tooltip()" />
+                        <br>
+                        <img id="shoes" src="cloth/shoes.svg" onmouseover="$(this).attr('title', 'Shoes').tooltip()" />
+                        <br>
+                        <img id="shirt" src="cloth/jacket.svg" onmouseover="$(this).attr('title', 'Jacket').tooltip()" />
+                        <br>
+                        <img id="hat" src="cloth/hat.svg" onmouseover="$(this).attr('title', 'Hat').tooltip()" />
+                        <br>
+                        <img id="glasses" src="cloth/glasses.svg" onmouseover="$(this).attr('title', 'Glasses').tooltip()" />
+                        <br>
+                        <img id="watch" src="cloth/watch.svg" onmouseover="$(this).attr('title', 'Watch').tooltip()" />
+                        <br>
+                        <img id="mask" src="cloth/mask.png" onmouseover="$(this).attr('title', 'Mask').tooltip()" />
+                    </div>
                     <div class="other-inventory" data-inventory="other"></div>
                 </div>
             </div>
