@@ -680,8 +680,6 @@ RegisterNUICallback('getCombineItem', function(data, cb)
 end)
 
 RegisterNUICallback("CloseInventory", function(data, cb)
-    TriggerEvent('InventoryAnim')
-    TriggerScreenblurFadeOut(0)
     if currentOtherInventory == "none-inv" then
         CurrentDrop = 0
         CurrentVehicle = nil
@@ -706,8 +704,11 @@ RegisterNUICallback("CloseInventory", function(data, cb)
         TriggerServerEvent("inventory:server:SaveInventory", "drop", CurrentDrop)
         CurrentDrop = 0
     end
+    TriggerScreenblurFadeOut(1000)
     SetNuiFocus(false, false)
+    TriggerEvent('InventoryAnim')
     inInventory = false
+    DeletePedScreen()
 end)
  
 RegisterNUICallback("UseItem", function(data, cb)
