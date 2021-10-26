@@ -26,6 +26,7 @@ end
 
 
 --====================================
+Config.playerammo = true
 
 Config.MaxInventorySlots = 41 -- +1 for the extra 'hotbar #6' slot 
 
