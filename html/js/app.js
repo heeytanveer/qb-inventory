@@ -2446,36 +2446,72 @@ var requiredItemOpen = false;
         }
     };
 
-    window.onload = function(e) {
-        window.addEventListener('message', function(event) {
-            switch(event.data.action) {
-                case "open":
-                    Inventory.Open(event.data);
-                    $(".components-container").data('Current', event.data);
-                    break;
-                case "close":
-                    Inventory.Close();
-                    break;
-                case "update":
-                    Inventory.Update(event.data);
-                    break;
-                case "itemBox":
-                    Inventory.itemBox(event.data);
-                    break;
-                case "requiredItem":
-                    Inventory.RequiredItem(event.data);
-                    break;
-                case "toggleHotbar":
-                    Inventory.ToggleHotbar(event.data);
-                    break;
-                case "RobMoney":
-                    $(".inv-options-list").append('<div class="inv-option-rob" id="rob-money"><p>Take Money</p></div>');
-                    $("#rob-money").data('TargetId', event.data.TargetId);
-                    break;
-            }
+    Inventory.Clickables = function () {
+        $('.cloth').find('img').off()
+        $('.cloth').find('img').click(function () {
+            $.post("http://qb-inventory/ChangeComponent", JSON.stringify({
+                component: $(this).attr('id')
+            }));
         })
-    }
+    };
+    Inventory.Cloth = function () {
+        Inventory.Clickables();
+        setTimeout(function () {
+            $('.other-inventory').fadeOut(200)
+            $('.other-inv-info').fadeOut(200)
+            $('.cloth').fadeIn(20)
+        }, 300);
+    };
+    isClothOpen = false;
+    Inventory.Necessary = function () {
+        $('.other-inventory').fadeIn(200)
+        $('.other-inv-info').fadeIn(200)
+        $('.cloth').fadeOut(0)
+        $('#clothing-menu').off()
+        $('#clothing-menu').click(function () {
+            if (isClothOpen == false) {
+                isClothOpen = true
+                $.post("http://qb-inventory/OpenClothMenu", JSON.stringify({ delete: isClothOpen }));
+            } else if (isClothOpen == true) {
+                isClothOpen = false
+                $.post("http://qb-inventory/OpenClothMenu", JSON.stringify({ delete: isClothOpen }));
+                Inventory.Necessary()
+            }
+            $('.tooltip').remove()
+        })
+    };
 
+    window.addEventListener('message', function (event) {
+        switch (event.data.action) {
+            case "cloth":
+                Inventory.Cloth();
+                break
+            case "open":
+                Inventory.Open(event.data);
+                Inventory.Necessary();
+                break;
+            case "close":
+                isClothOpen = false;
+                Inventory.Close();
+                break;
+            case "update":
+                Inventory.Update(event.data);
+                break;
+            case "itemBox":
+                Inventory.itemBox(event.data);
+                break;
+            case "requiredItem":
+                Inventory.RequiredItem(event.data);
+                break;
+            case "toggleHotbar":
+                Inventory.ToggleHotbar(event.data);
+                break;
+            case "RobMoney":
+                $(".inv-options-list").prepend('<center><div style="border:none;background-color: rgba(0, 0, 0, 0.38); " class="inv-option-item" id="rob-money"><p>Steal Cash</p></div></center>');
+                $("#rob-money").data('TargetId', event.data.TargetId);
+                break;
+        }
+    });
 })();
 $(document).on('click', '#rob-money', function(e){
     e.preventDefault();
