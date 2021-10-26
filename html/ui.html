@@ -52,7 +52,8 @@
                         <input  type="number" id="item-amount"  class="inv-option-item" min=0 value="0" oninput="validity.valid||(value='');" onClick="this.select();"></input>
                         <img src="images/use.png" class="use" id="item-use"/>
                         </br></br>
-                        <img src="images/close.png" id="close-ui" class='closeUi' onclick="closeInventory()"/>
+                        <!-- <img src="images/close.png" id="close-ui" class='closeUi' onclick="closeInventory()"/> -->
+                        <img src="images/close.png" id="close-ui" class='closeUi' onclick="closeInventory(); $('.tooltip').remove()" onmouseover="$(this).attr('title', 'Close Inventory').tooltip()" />
                         <div id="item-give" class='give'>GIVE</div>
 
                         <!-- <div class="clothing" id="clothing-menu"><p>Clothing</p></div>  W.i.P -->
