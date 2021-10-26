@@ -9,6 +9,7 @@ All Credits to go to the original qbcore-framework repository
 *Clothing*
 - dp-clothing is required for clothing to work properly 
 
+https://github.com/andristum/dpclothing
 
 ## Fix Uncaught TypeError 
 - To fix 
