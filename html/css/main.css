@@ -1200,3 +1200,30 @@ body {
 .inv-option-rob:hover {
     background-color: #47688a;
 }
+
+#glasses,
+#hat,
+#mask,
+#pants,
+#shirt,
+#shoes,
+#top,
+#vest,
+#watch {
+	width: 3vw;
+	border: .4vh solid #47688a;
+	border-radius: 50%;
+	padding: 1vh
+}
+
+#glasses:hover,
+#hat:hover,
+#mask:hover,
+#pants:hover,
+#shirt:hover,
+#shoes:hover,
+#top:hover,
+#vest:hover,
+#watch:hover {
+	opacity: .5
+}
