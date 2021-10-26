@@ -28,6 +28,8 @@ files {
 	'html/attachment_images/*.png',
 	'html/*.ttf',
 	'html/*.png',
+	'html/cloth/*.png',
+	'html/cloth/*.svg',
 }
 
 dependency 'qb-weapons' 
