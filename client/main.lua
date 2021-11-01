@@ -211,7 +211,9 @@ RegisterCommand('inventory', function()
                     TriggerServerEvent("inventory:server:OpenInventory", "stash", Dumpster, {maxweight = 1000000, slots = 15})
                     TriggerEvent("inventory:client:SetCurrentStash", Dumpster)
 
-                elseif JailContainerFound and exports['qb-prison']:GetInJailStatus() then
+                -- elseif JailContainerFound and exports['qb-prison']:GetInJailStatus() then
+		elseif JailContainerFound then
+		
 
                     local Container = 'Jail-Container | '..math.floor(JailContainerFound.x).. ' | '..math.floor(JailContainerFound.y)..' |'
                     TriggerServerEvent("inventory:server:OpenInventory", "stash", Container, {maxweight = 1000000, slots = 15})
