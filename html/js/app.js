@@ -528,27 +528,27 @@ function FormatItemInfo(itemData, dom) {
             $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
         } else if (itemData.name == "fish") {
             $(".item-info-title").html('<p>' + itemData.label + '</p>')
-            $(".item-info-description").html('<p>Species: ' + itemData.info.species + '</p>Weight: ' + itemData.info.weight + ' lbs</p>Type: ' + itemData.info.type);
+            $(".item-info-description").html('<p>Species: ' + itemData.info.species + '</p>Weight: ' + itemData.info.lbs + ' lbs</p>Type: ' + itemData.info.type);
             $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
         } else if (itemData.name == "stingray") {
             $(".item-info-title").html('<p>' + itemData.label + '</p>')
-            $(".item-info-description").html('<p>Species: ' + itemData.info.species + '</p>Weight: ' + itemData.info.weight + ' lbs</p>Type: ' + itemData.info.type);
+            $(".item-info-description").html('<p>Species: ' + itemData.info.species + '</p>Weight: ' + itemData.info.lbs + ' lbs</p>Type: ' + itemData.info.type);
             $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
         } else if (itemData.name == "dolphin") {
             $(".item-info-title").html('<p>' + itemData.label + '</p>')
-            $(".item-info-description").html('<p>Species: ' + itemData.info.species + '</p>Weight: ' + itemData.info.weight + ' lbs</p>Type: ' + itemData.info.type);
+            $(".item-info-description").html('<p>Species: ' + itemData.info.species + '</p>Weight: ' + itemData.info.lbs + ' lbs</p>Type: ' + itemData.info.type);
             $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
         } else if (itemData.name == "sharkhammer") {
             $(".item-info-title").html('<p>' + itemData.label + '</p>')
-            $(".item-info-description").html('<p>Species: ' + itemData.info.species + '</p>Weight: ' + itemData.info.weight + ' lbs</p>Type: ' + itemData.info.type);
+            $(".item-info-description").html('<p>Species: ' + itemData.info.species + '</p>Weight: ' + itemData.info.lbs + ' lbs</p>Type: ' + itemData.info.type);
             $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
         } else if (itemData.name == "sharktiger") {
             $(".item-info-title").html('<p>' + itemData.label + '</p>')
-            $(".item-info-description").html('<p>Species: ' + itemData.info.species + '</p>Weight: ' + itemData.info.weight + ' lbs</p>Type: ' + itemData.info.type);
+            $(".item-info-description").html('<p>Species: ' + itemData.info.species + '</p>Weight: ' + itemData.info.lbs + ' lbs</p>Type: ' + itemData.info.type);
             $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
         } else if (itemData.name == "killerwhale") {
             $(".item-info-title").html('<p>' + itemData.label + '</p>')
-            $(".item-info-description").html('<p>Species: ' + itemData.info.species + '</p>Weight: ' + itemData.info.weight + ' lbs</p>Type: ' + itemData.info.type);
+            $(".item-info-description").html('<p>Species: ' + itemData.info.species + '</p>Weight: ' + itemData.info.lbs + ' lbs</p>Type: ' + itemData.info.type);
             $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
         } else {
             $(".item-info-title").html('<p>' + itemData.label + '</p>')
