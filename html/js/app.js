@@ -526,11 +526,23 @@ function FormatItemInfo(itemData, dom) {
             $(".item-info-title").html('<p>' + itemData.label + '</p>')
             $(".item-info-description").html('<p>Lab: ' + itemData.info.lab + '</p>');
             $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
-        } else if (itemData.name == "fish") {
+        } else if (itemData.name == "bass") {
             $(".item-info-title").html('<p>' + itemData.label + '</p>')
             $(".item-info-description").html('<p>Species: ' + itemData.info.species + '</p>Weight: ' + itemData.info.lbs + ' lbs</p>Type: ' + itemData.info.type);
             $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
         } else if (itemData.name == "stingray") {
+            $(".item-info-title").html('<p>' + itemData.label + '</p>')
+            $(".item-info-description").html('<p>Species: ' + itemData.info.species + '</p>Weight: ' + itemData.info.lbs + ' lbs</p>Type: ' + itemData.info.type);
+            $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
+        } else if (itemData.name == "flounder") {
+            $(".item-info-title").html('<p>' + itemData.label + '</p>')
+            $(".item-info-description").html('<p>Species: ' + itemData.info.species + '</p>Weight: ' + itemData.info.lbs + ' lbs</p>Type: ' + itemData.info.type);
+            $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
+        } else if (itemData.name == "codfish") {
+            $(".item-info-title").html('<p>' + itemData.label + '</p>')
+            $(".item-info-description").html('<p>Species: ' + itemData.info.species + '</p>Weight: ' + itemData.info.lbs + ' lbs</p>Type: ' + itemData.info.type);
+            $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
+        } else if (itemData.name == "mackerel") {
             $(".item-info-title").html('<p>' + itemData.label + '</p>')
             $(".item-info-description").html('<p>Species: ' + itemData.info.species + '</p>Weight: ' + itemData.info.lbs + ' lbs</p>Type: ' + itemData.info.type);
             $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
