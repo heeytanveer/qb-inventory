@@ -2,14 +2,13 @@
 All Credits to go to the original qbcore-framework repository
 
 ## Info
-*Weapons*
+**[edited qb-weapons](https://github.com/dojwun/qb-weapons)** [W.I.P]
 - Mostly used for getting ammo values in qb-inventory tool tip
-- https://github.com/dojwun/qb-weapons [W.I.P]
 
-*Clothing*
+**[dp-clothing](https://github.com/andristum/dpclothing)**
 - dp-clothing is required for clothing to work properly 
 
-https://github.com/andristum/dpclothing
+
 
 ## Fix Uncaught TypeError 
 - To fix 
@@ -19,8 +18,8 @@ https://github.com/andristum/dpclothing
 
 
 
-## Video
-https://streamable.com/5tpgg0
+## Showcase
 
-## Screenshot
+**[Video](https://streamable.com/5tpgg0)**
+
 ![General](https://i.imgur.com/3S5NxBp.png)
