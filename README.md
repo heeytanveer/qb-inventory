@@ -23,7 +23,7 @@ All Credits to go to the original qbcore-framework repository
 ```TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['water'], "add", 1)``` <--
 ```TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['water'], "remove", 1)``` <--
 
-- Dont like to fixing stuff? Go buy a paid inventory from a leech
+- Dont like fixing stuff? Go buy a paid inventory from a leech
 
 ## Showcase
 
