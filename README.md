@@ -16,7 +16,14 @@ All Credits to go to the original qbcore-framework repository
 - Quality has to be manually added to the item u just recieved 
 - For example: ```Player.Functions.AddItem(item, amount, slot, {["quality"] = 100})```
 
+## Fix Item showing up as [+Undefined/-Undefined] 
+- To fix you need to add the amount of items you recieved in the item box when item is removed/recieved
+- For example:
 
+```TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['water'], "add", 1)``` <--
+```TriggerClientEvent('inventory:client:ItemBox', src, QBCore.Shared.Items['water'], "remove", 1)``` <--
+
+- Dont like to fixing stuff? Go buy a paid inventory from a leech
 
 ## Showcase
 
