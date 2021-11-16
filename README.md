@@ -2,7 +2,7 @@
 All Credits to go to the original qbcore-framework repository
 
 ## Info
-**[edited qb-weapons](https://github.com/dojwun/qb-weapons)** [W.I.P]
+**[edited qb-weapons](https://github.com/dojwun/qb-weapons)** [W.I.P] (not recommended)
 - Mostly used for getting ammo values in qb-inventory tool tip
 
 **[dp-clothing](https://github.com/andristum/dpclothing)**
