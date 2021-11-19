@@ -3,8 +3,7 @@ local QBCore = exports['qb-core']:GetCoreObject()
 
 local itemInfos = {}
 
-RegisterNetEvent("inventory:client:Crafting")
-AddEventHandler("inventory:client:Crafting", function(dropId)
+RegisterNetEvent("inventory:client:Crafting", function(dropId)
 	local crafting = {}
 	crafting.label = "Crafting"
 	crafting.items = GetThresholdItems()
@@ -12,16 +11,14 @@ AddEventHandler("inventory:client:Crafting", function(dropId)
 end)
 
 
-RegisterNetEvent("inventory:client:WeaponAttachmentCrafting")
-AddEventHandler("inventory:client:WeaponAttachmentCrafting", function(dropId)
+RegisterNetEvent("inventory:client:WeaponAttachmentCrafting", function(dropId)
 	local crafting = {}
 	crafting.label = "Weapon Attachment Crafting"
 	crafting.items = GetAttachmentThresholdItems()
 	TriggerServerEvent("inventory:server:OpenInventory", "attachment_crafting", math.random(1, 99), crafting)
 end)
 
-RegisterNetEvent("inventory:client:WeaponCrafting")
-AddEventHandler("inventory:client:WeaponCrafting", function(dropId)
+RegisterNetEvent("inventory:client:WeaponCrafting", function(dropId)
 	local crafting = {}
 	crafting.label = "Weapon Crafting"
 	crafting.items = GetWeaponThresholdItems()
