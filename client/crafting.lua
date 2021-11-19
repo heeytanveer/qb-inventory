@@ -1,9 +1,7 @@
 
+local QBCore = exports['qb-core']:GetCoreObject()
 
 local itemInfos = {}
-
-
-
 
 RegisterNetEvent("inventory:client:Crafting")
 AddEventHandler("inventory:client:Crafting", function(dropId)
