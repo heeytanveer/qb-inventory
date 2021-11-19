@@ -1,9 +1,7 @@
+
 local QBCore = exports['qb-core']:GetCoreObject()
 
 local inInventory = false
-local hotbarOpen = false
-
-local inventoryTest = {}
 local currentWeapon = nil
 local CurrentWeaponData = {}
 local currentOtherInventory = nil
@@ -51,11 +49,6 @@ RegisterNetEvent('weapons:client:SetCurrentWeapon', function(data, bool)
     end
 end)
 
-
-RegisterNUICallback('OpenHudMenu', function()
-    TriggerEvent("doj:client:OpenHudMenu")
-end)
-
 -- CloseInventory very rare if scuff 
 RegisterCommand('closeinv', function()
 	exports['textUi']:DrawTextUi('show', "Closing Inventory ")
@@ -71,24 +64,7 @@ RegisterCommand('closeinv', function()
     Wait(1000)
     exports['textUi']:DrawTextUi('hide')
 end, false)
-
-
-
-RegisterNetEvent('InventoryAnim', function()
-    playAnim("pickup_object", "putdown_low", 1000)
-end)
-
-function playAnim(animDict, animName, duration)
-    RequestAnimDict(animDict)
-    while not HasAnimDictLoaded(animDict) do 
-      Wait(5) 
-    end
-    TaskPlayAnim(PlayerPedId(), animDict, animName, 1.0, -1.0, duration, 49, 1, false, false, false)
-    RemoveAnimDict(animDict)
-end
-
-
--- Inventory Main Thread
+ 
 RegisterCommand('inventory', function()
     if not isCrafting and not inInventory then
         QBCore.Functions.GetPlayerData(function(PlayerData) 
@@ -98,7 +74,6 @@ RegisterCommand('inventory', function()
                 local BinFound = ClosestGarbageBin()
                 local DumpsterFound = ClosestContainer()
                 local JailContainerFound = ClosestJailContainer()
-                -- Is Player In Vehicle
 
                 if IsPedInAnyVehicle(ped) then
                     local vehicle = GetVehiclePedIsIn(ped, false)
@@ -169,7 +144,7 @@ RegisterCommand('inventory', function()
                     elseif vehicleClass == 12 then
                         maxweight = 120000
                         slots = 35
-		    elseif vehicleClass == 13 then
+		            elseif vehicleClass == 13 then
                         maxweight = 0
                         slots = 0
                     elseif vehicleClass == 14 then
@@ -191,32 +166,25 @@ RegisterCommand('inventory', function()
                     }
                     TriggerServerEvent("inventory:server:OpenInventory", "trunk", CurrentVehicle, other)
                     OpenTrunk()
-
                 elseif CurrentGlovebox ~= nil then
-
                     TriggerServerEvent("inventory:server:OpenInventory", "glovebox", CurrentGlovebox)
                 elseif CurrentDrop ~= 0 then
                     TriggerServerEvent("inventory:server:OpenInventory", "drop", CurrentDrop)
                 elseif BinFound then
-
                     local GarbageBin = 'Garbage Bin | '..math.floor(BinFound.x).. ' | '..math.floor(BinFound.y)..' |'
                     TriggerServerEvent("inventory:server:OpenInventory", "stash", GarbageBin, {maxweight = 1000000, slots = 15})
                     TriggerEvent("inventory:client:SetCurrentStash", GarbageBin)
                 elseif DumpsterFound then
-                
                     local Dumpster = 'Dumpster | '..math.floor(DumpsterFound.x).. ' | '..math.floor(DumpsterFound.y)..' |'
                     TriggerServerEvent("inventory:server:OpenInventory", "stash", Dumpster, {maxweight = 1000000, slots = 15})
                     TriggerEvent("inventory:client:SetCurrentStash", Dumpster)
-
-                -- elseif JailContainerFound and exports['qb-prison']:GetInJailStatus() then 
                 elseif JailContainerFound then 
-
                     local Container = 'Jail-Container | '..math.floor(JailContainerFound.x).. ' | '..math.floor(JailContainerFound.y)..' |'
                     TriggerServerEvent("inventory:server:OpenInventory", "stash", Container, {maxweight = 1000000, slots = 15})
                     TriggerEvent("inventory:client:SetCurrentStash", Container)
-
                 else
-
+                    TriggerEvent("InventoryAnim")		
+                    TriggerScreenblurFadeIn(1000)
                     TriggerServerEvent("inventory:server:OpenInventory")
                 end
             end    
@@ -250,7 +218,6 @@ RegisterNetEvent("qb-inventory:client:SetCurrentStash", function(stash)
     CurrentStash = stash
 end)
 
-
 RegisterNetEvent('inventory:client:ItemBox', function(itemData, type, amount)
     SendNUIMessage({
         action = "itemBox",
@@ -259,6 +226,7 @@ RegisterNetEvent('inventory:client:ItemBox', function(itemData, type, amount)
         amount = amount
     }) 
 end)
+
 RegisterNetEvent('inventory:client:WeaponHolster', function(itemData, weapon)
     local type = "holster"
     if weapon == "weapon_unarmed" then
@@ -285,7 +253,6 @@ RegisterNetEvent('inventory:client:requiredItems', function(items, bool)
             })
         end
     end
-    
     SendNUIMessage({
         action = "requiredItem",
         items = itemTable,
@@ -349,8 +316,6 @@ end)
 
 RegisterNetEvent("inventory:client:OpenInventory", function(PlayerAmmo, inventory, other)
     if not IsEntityDead(PlayerPedId()) then
-        TriggerEvent("InventoryAnim")		
-        TriggerScreenblurFadeIn(1000)
         ToggleHotbar(false)
         SetNuiFocus(true, true)
         if other ~= nil then
@@ -359,7 +324,7 @@ RegisterNetEvent("inventory:client:OpenInventory", function(PlayerAmmo, inventor
         SendNUIMessage({
             action = "open",
             inventory = inventory,
-            slots = Config.MaxInventorySlots,
+            slots = MaxInventorySlots,
             other = other,
             maxweight = QBCore.Config.Player.MaxWeight,
             Ammo = PlayerAmmo,
@@ -370,11 +335,11 @@ RegisterNetEvent("inventory:client:OpenInventory", function(PlayerAmmo, inventor
 end)
 
 --GIVE
-RegisterNUICallback("GiveItem", function(data, cb) 
+RegisterNUICallback("GiveItem", function(data, cb)
     local player, distance = QBCore.Functions.GetClosestPlayer(GetEntityCoords(PlayerPedId()))
     if player ~= -1 and distance < 3 then
         if (data.inventory == 'player') then
-            local playerId = GetPlayerServerId(player) 
+            local playerId = GetPlayerServerId(player)
             SetCurrentPedWeapon(PlayerPedId(),'WEAPON_UNARMED',true)
             TriggerServerEvent("inventory:server:GiveItem", playerId, data.inventory, data.item, data.amount)
         else
@@ -385,6 +350,10 @@ RegisterNUICallback("GiveItem", function(data, cb)
     end
 end)
 
+RegisterNetEvent('qb-inventory:client:giveAnim', function()
+    LoadAnimDict('mp_common')
+	TaskPlayAnim(PlayerPedId(), 'mp_common', 'givetake1_b', 8.0, 1.0, -1, 16, 0, 0, 0, 0)
+end)
 
 
 RegisterNetEvent("inventory:client:ShowTrunkPos", function()
@@ -396,7 +365,7 @@ RegisterNetEvent("inventory:client:UpdatePlayerInventory", function(isError)
         action = "update",
         inventory = QBCore.Functions.GetPlayerData().items,
         maxweight = QBCore.Config.Player.MaxWeight,
-        slots = Config.MaxInventorySlots,
+        slots = MaxInventorySlots,
         error = isError,
     })
 end)
@@ -453,31 +422,31 @@ RegisterNetEvent('inventory:client:CraftAttachment', function(itemName, itemCost
 	end)
 end)
 
-RegisterNetEvent("inventory:client:PickupSnowballs", function()
+RegisterNetEvent('inventory:client:PickupSnowballs', function()
+    local ped = PlayerPedId()
     LoadAnimDict('anim@mp_snowball')
-    TaskPlayAnim(PlayerPedId(), 'anim@mp_snowball', 'pickup_snowball', 3.0, 3.0, -1, 0, 1, 0, 0, 0)
-    QBCore.Functions.Progressbar("pickupsnowball", "Sneeuwballen oprapen..", 1500, false, true, {
+    TaskPlayAnim(ped, 'anim@mp_snowball', 'pickup_snowball', 3.0, 3.0, -1, 0, 1, 0, 0, 0)
+    QBCore.Functions.Progressbar("pickupsnowball", "Collecting snowballs..", 1500, false, true, {
         disableMovement = true,
         disableCarMovement = true,
         disableMouse = false,
         disableCombat = true,
     }, {}, {}, {}, function() -- Done
-        ClearPedTasks(PlayerPedId())
+        ClearPedTasks(ped)
         TriggerServerEvent('QBCore:Server:AddItem', "snowball", 1)
-        TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items["snowball"], "add", 1)
+        TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items["snowball"], "add")
     end, function() -- Cancel
-        ClearPedTasks(PlayerPedId())
-        QBCore.Functions.Notify("Canceled..", "error")
+        ClearPedTasks(ped)
+        QBCore.Functions.Notify("Canceled", "error")
     end)
 end)
 
-RegisterNetEvent("inventory:client:UseSnowball", function(amount)
+RegisterNetEvent('inventory:client:UseSnowball', function(amount)
     local ped = PlayerPedId()
-    GiveWeaponToPed(ped, GetHashKey("weapon_snowball"), amount, false, false)
-    SetPedAmmo(ped, GetHashKey("weapon_snowball"), amount)
-    SetCurrentPedWeapon(ped, GetHashKey("weapon_snowball"), true) 
+    GiveWeaponToPed(ped, `weapon_snowball`, amount, false, false)
+    SetPedAmmo(ped, `weapon_snowball`, amount)
+    SetCurrentPedWeapon(ped, `weapon_snowball`, true)
 end)
-
 
 RegisterNetEvent("inventory:client:UseWeapon", function(weaponData, shootbool)
     local ped = PlayerPedId()
@@ -558,8 +527,6 @@ RegisterNUICallback('GetWeaponData', function(data, cb)
     cb(data)
 end)
 
-
-
 RegisterNUICallback('RemoveAttachment', function(data, cb)
     local WeaponData = QBCore.Shared.Items[data.WeaponData.name]
     local Attachment = WeaponAttachments[WeaponData.name:upper()][data.AttachmentData.attachment]
@@ -590,10 +557,12 @@ RegisterNUICallback('RemoveAttachment', function(data, cb)
     end, data.AttachmentData, data.WeaponData)
 end)
 
-RegisterNetEvent("inventory:client:CheckWeapon", function(weaponName)
-    if currentWeapon == weaponName then 
-        SetCurrentPedWeapon(PlayerPedId(), GetHashKey("WEAPON_UNARMED"), true)
-        RemoveAllPedWeapons(PlayerPedId(), true)
+RegisterNetEvent('inventory:client:CheckWeapon', function(weaponName)
+    local ped = PlayerPedId()
+    if currentWeapon == weaponName then
+        TriggerEvent('weapons:ResetHolster')
+        SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
+        RemoveAllPedWeapons(ped, true)
         currentWeapon = nil
     end
 end)
@@ -615,7 +584,6 @@ RegisterNetEvent('inventory:client:RemoveDropItem', function(dropId)
     Drops[dropId] = nil
     DropsNear[dropId] = nil
 end)
-
 
 RegisterNetEvent("inventory:client:DropItemAnim", function()
     local ped = PlayerPedId()
@@ -642,7 +610,6 @@ RegisterNetEvent("inventory:client:showWeaponLicense", function(sourceId, citize
         })
     end
 end) 
-
 
 RegisterNetEvent("inventory:client:SetCurrentStash", function(stash)
     CurrentStash = stash
@@ -677,10 +644,11 @@ RegisterNUICallback("CloseInventory", function(data, cb)
         TriggerServerEvent("inventory:server:SaveInventory", "drop", CurrentDrop)
         CurrentDrop = 0
     end
-    TriggerScreenblurFadeOut(1000)
     SetNuiFocus(false, false)
-    TriggerEvent('InventoryAnim')
     inInventory = false
+
+    TriggerScreenblurFadeOut(1000)
+    TriggerEvent('InventoryAnim')    
     DeletePedScreen()
 end)
  
@@ -838,6 +806,8 @@ function loadAnimDict(dict)
 		Wait(500)
 	end
 end
+
+--====================================================================================================================
 
 function disableWeaponFiring()
 	CreateThread(function ()
@@ -1075,26 +1045,35 @@ end)
 
 RegisterNetEvent('inventory:client:OpenDumpster')
 AddEventHandler('inventory:client:OpenDumpster', function()
-
     -- local DumpsterFound = ClosestContainer()
     -- local Dumpster = 'Dumpster | '..math.floor(DumpsterFound.x).. ' | '..math.floor(DumpsterFound.y)..' |'
     -- TriggerServerEvent("inventory:server:OpenInventory", "stash", Dumpster, {maxweight = 1000000, slots = 15})
     -- TriggerEvent("inventory:client:SetCurrentStash", Dumpster)
-
     QBCore.Functions.Notify("Open inventory right next to dumpster to access!", "error")
-
-
 end) 
 
 RegisterNetEvent('inventory:client:OpenBin')
 AddEventHandler('inventory:client:OpenBin', function()
-
     -- local BinFound = ClosestGarbageBin()
     -- local GarbageBin = 'Garbage Bin | '..math.floor(BinFound.x).. ' | '..math.floor(BinFound.y)..' |'
     -- TriggerServerEvent("inventory:server:OpenInventory", "stash", GarbageBin, {maxweight = 1000000, slots = 15})
     -- TriggerEvent("inventory:client:SetCurrentStash", GarbageBin)
-
     QBCore.Functions.Notify("Open inventory right next to bin to access!", "error")
-
-
 end)
+
+RegisterNUICallback('OpenHudMenu', function()
+    TriggerEvent("doj:client:OpenHudMenu")
+end)
+
+RegisterNetEvent('InventoryAnim', function()
+    playAnim("pickup_object", "putdown_low", 1000)
+end)
+
+function playAnim(animDict, animName, duration)
+    RequestAnimDict(animDict)
+    while not HasAnimDictLoaded(animDict) do 
+      Wait(5) 
+    end
+    TaskPlayAnim(PlayerPedId(), animDict, animName, 1.0, -1.0, duration, 49, 1, false, false, false)
+    RemoveAnimDict(animDict)
+end
