@@ -1,4 +1,8 @@
+
+local QBCore = exports['qb-core']:GetCoreObject()
+
 inClothMenu = false
+
 function OpenPedClothMenu()
     TriggerServerEvent("inventory:server:OpenInventory")
     SendNUIMessage({action = "cloth"})
