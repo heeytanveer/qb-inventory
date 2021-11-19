@@ -1,3 +1,4 @@
+local QBCore = exports['qb-core']:GetCoreObject()
 
 local inInventory = false
 local hotbarOpen = false
@@ -482,49 +483,48 @@ RegisterNetEvent("inventory:client:UseWeapon", function(weaponData, shootbool)
     local ped = PlayerPedId()
     local weaponName = tostring(weaponData.name)
     if currentWeapon == weaponName then
-        SetCurrentPedWeapon(ped, GetHashKey("WEAPON_UNARMED"), true)
+        SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
         RemoveAllPedWeapons(ped, true)
-        RemoveWeapon(currentWeapon)
+        RemoveWeaponAnimation(currentWeapon)
         currentWeapon = nil
         TriggerEvent('qb-hud:client:ToggleWeaponMode', false)  
         TriggerEvent('inventory:client:WeaponHolster', weaponData, "weapon_unarmed")
     elseif weaponName == "weapon_stickybomb" then
-        GiveWeaponToPed(ped, GetHashKey(weaponName), ammo, false, false)
+        GiveWeaponToPed(ped, GetHashKey(weaponName), 1, false, false)
         SetPedAmmo(ped, GetHashKey(weaponName), 1)
         SetCurrentPedWeapon(ped, GetHashKey(weaponName), true)
-        TriggerEvent('qb-hud:client:ToggleWeaponMode', true)  
         TriggerServerEvent('QBCore:Server:RemoveItem', weaponName, 1)
         TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
         currentWeapon = weaponName
+        TriggerEvent('qb-hud:client:ToggleWeaponMode', true)  
     elseif weaponName == "weapon_snowball" then
-        GiveWeaponToPed(ped, GetHashKey(weaponName), ammo, false, false)
+        GiveWeaponToPed(ped, GetHashKey(weaponName), 10, false, false)
         SetPedAmmo(ped, GetHashKey(weaponName), 10)
         SetCurrentPedWeapon(ped, GetHashKey(weaponName), true)
-        TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
         TriggerServerEvent('QBCore:Server:RemoveItem', weaponName, 1)
-        TriggerEvent('qb-hud:client:ToggleWeaponMode', true)  
+        TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
         currentWeapon = weaponName
+        TriggerEvent('qb-hud:client:ToggleWeaponMode', true)  
     else
         TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
+
         QBCore.Functions.TriggerCallback("weapon:server:GetWeaponAmmo", function(result)
-            GiveWeapon(currentWeapon)
             local ammo = tonumber(result)
             if weaponName == "weapon_petrolcan" or weaponName == "weapon_fireextinguisher" then 
                 ammo = 4000
-            elseif weaponName == "weapon_snowball" then
-                TriggerEvent("fuel:SetJerryCan", weaponData)
             end
+            GiveWeaponAnimation(currentWeapon)
             GiveWeaponToPed(ped, GetHashKey(weaponName), ammo, false, false)
             SetPedAmmo(ped, GetHashKey(weaponName), ammo)
             SetCurrentPedWeapon(ped, GetHashKey(weaponName), true)
-            TriggerEvent('qb-hud:client:ToggleWeaponMode', true)  
-            TriggerEvent('inventory:client:WeaponHolster', weaponData, currentWeapon)
             if weaponData.info.attachments ~= nil then
                 for _, attachment in pairs(weaponData.info.attachments) do
                     GiveWeaponComponentToPed(ped, GetHashKey(weaponName), GetHashKey(attachment.component))
                 end
             end
             currentWeapon = weaponName
+            TriggerEvent('qb-hud:client:ToggleWeaponMode', true)  
+            TriggerEvent('inventory:client:WeaponHolster', weaponData, currentWeapon)
         end, CurrentWeaponData)
     end
 end)
@@ -839,7 +839,7 @@ function loadAnimDict(dict)
 	end
 end
 
-function disable()
+function disableWeaponFiring()
 	CreateThread(function ()
 		while not canFire do
 			DisableControlAction(0, 25, true)
@@ -849,11 +849,11 @@ function disable()
 	end)
 end
 
-function GiveWeapon(weapon)
+function GiveWeaponAnimation(weapon)
     local playerPed = PlayerPedId()
     local hash = GetHashKey(weapon)
     canFire = false
-    disable()
+    disableWeaponFiring()
     if not HasAnimDictLoaded("random@mugging3") then
         loadAnimDict( "reaction@intimidation@1h" )
     end
@@ -863,11 +863,11 @@ function GiveWeapon(weapon)
     canFire = true
 end
 
-function RemoveWeapon(weapon)
+function RemoveWeaponAnimation(weapon)
     local playerPed = PlayerPedId()
     local hash = GetHashKey(weapon)
     canFire = false
-    disable()
+    disableWeaponFiring()
     if not HasAnimDictLoaded("reaction@intimidation@1h") then
         loadAnimDict( "reaction@intimidation@1h" )
     end
