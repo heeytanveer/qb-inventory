@@ -3,6 +3,8 @@ Config = {}
 
 Config.playerammo = false  -- disable player ammo from being fetched from database
 
+Config.MaxInventorySlots = 41
+
 Config.MaximumAmmoValues = { ["pistol"] = 250, ["smg"] = 250, ["shotgun"] = 200, ["rifle"] = 250 }
 
 Config.VendingMachine = {
