@@ -15,17 +15,6 @@ local isCrafting = false
 local isHotbar = false
 local showTrunkPos = false
 
-Citizen.CreateThread(function()
-    while true do
-        Citizen.Wait(1)
-        DisableControlAction(0, 37, true) -- TAB
-        DisableControlAction(0, 157, true) -- 1
-        DisableControlAction(0, 158, true) -- 2
-        DisableControlAction(0, 160, true) -- 3
-        DisableControlAction(0, 164, true) -- 4
-        DisableControlAction(0, 165, true) -- 5
-    end
-end)
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     LocalPlayer.state:set("inv_busy", false, true)
@@ -310,6 +299,18 @@ CreateThread(function()
     end
 end)
 
+CreateThread(function()
+    while true do
+        Wait(1)
+        DisableControlAction(0, 37, true) -- TAB
+        DisableControlAction(0, 157, true) -- 1
+        DisableControlAction(0, 158, true) -- 2
+        DisableControlAction(0, 160, true) -- 3
+        DisableControlAction(0, 164, true) -- 4
+        DisableControlAction(0, 165, true) -- 5
+    end
+end)
+
 RegisterNetEvent('inventory:server:RobPlayer', function(TargetId)
     SendNUIMessage({
         action = "RobMoney",
@@ -345,6 +346,16 @@ RegisterNetEvent("inventory:client:OpenInventory", function(PlayerAmmo, inventor
     end
 end)
 
+RegisterNetEvent("inventory:client:UpdatePlayerInventory", function(isError)
+    SendNUIMessage({
+        action = "update",
+        inventory = QBCore.Functions.GetPlayerData().items,
+        maxweight = QBCore.Config.Player.MaxWeight,
+        slots = Config.MaxInventorySlots,
+        error = isError,
+    })
+end)
+
 --GIVE
 RegisterNUICallback("GiveItem", function(data, cb)
     local player, distance = QBCore.Functions.GetClosestPlayer(GetEntityCoords(PlayerPedId()))
@@ -371,15 +382,7 @@ RegisterNetEvent("inventory:client:ShowTrunkPos", function()
     showTrunkPos = true
 end)
 
-RegisterNetEvent("inventory:client:UpdatePlayerInventory", function(isError)
-    SendNUIMessage({
-        action = "update",
-        inventory = QBCore.Functions.GetPlayerData().items,
-        maxweight = QBCore.Config.Player.MaxWeight,
-        slots = Config.MaxInventorySlots,
-        error = isError,
-    })
-end)
+
 
 RegisterNetEvent("inventory:client:CraftItems", function(itemName, itemCosts, amount, toSlot, points)
     SendNUIMessage({
@@ -465,7 +468,6 @@ RegisterNetEvent("inventory:client:UseWeapon", function(weaponData, shootbool)
     if currentWeapon == weaponName then
         SetCurrentPedWeapon(ped, `WEAPON_UNARMED`, true)
         RemoveAllPedWeapons(ped, true)
-        RemoveWeaponAnimation(currentWeapon)
         currentWeapon = nil
         TriggerEvent('qb-hud:client:ToggleWeaponMode', false)  
         TriggerEvent('inventory:client:WeaponHolster', weaponData, "weapon_unarmed")
@@ -493,7 +495,6 @@ RegisterNetEvent("inventory:client:UseWeapon", function(weaponData, shootbool)
             if weaponName == "weapon_petrolcan" or weaponName == "weapon_fireextinguisher" then 
                 ammo = 4000
             end
-            GiveWeaponAnimation(currentWeapon)
             GiveWeaponToPed(ped, GetHashKey(weaponName), ammo, false, false)
             SetPedAmmo(ped, GetHashKey(weaponName), ammo)
             SetCurrentPedWeapon(ped, GetHashKey(weaponName), true)
@@ -690,17 +691,17 @@ RegisterNetEvent('inventory:client:RobPlayer', function()
                 flags = 16,
             }, {}, {}, function() -- Done
                 local plyCoords = GetEntityCoords(playerPed)
-                local pos = GetEntityCoords(GetPlayerPed(-1))
+                local pos = GetEntityCoords(PlayerPedId())
                 local dist = GetDistanceBetweenCoords(pos.x, pos.y, pos.z, plyCoords.x, plyCoords.y, plyCoords.z, true)
                 if dist < 2.5 then
-                    StopAnimTask(GetPlayerPed(-1), "random@shop_robbery", "robbery_action_b", 1.0)
+                    StopAnimTask(PlayerPedId(), "random@shop_robbery", "robbery_action_b", 1.0)
                     TriggerServerEvent("inventory:server:OpenInventory", "otherplayer", playerId)
                     TriggerEvent("inventory:server:RobPlayer", playerId)
                 else
                     QBCore.Functions.Notify("No one nearby!", "error")
                 end
             end, function() -- Cancel
-                StopAnimTask(GetPlayerPed(-1), "random@shop_robbery", "robbery_action_b", 1.0)
+                StopAnimTask(PlayerPedId(), "random@shop_robbery", "robbery_action_b", 1.0)
                 QBCore.Functions.Notify("Canceled..", "error")
             end)
 		else
@@ -820,49 +821,11 @@ end
 
 --====================================================================================================================
 
-function disableWeaponFiring()
-	CreateThread(function ()
-		while not canFire do
-			DisableControlAction(0, 25, true)
-			DisablePlayerFiring(player, true)
-            Wait(5)
-		end
-	end)
-end
-
-function GiveWeaponAnimation(weapon)
-    local playerPed = PlayerPedId()
-    local hash = GetHashKey(weapon)
-    canFire = false
-    disableWeaponFiring()
-    if not HasAnimDictLoaded("random@mugging3") then
-        loadAnimDict( "reaction@intimidation@1h" )
-    end
-    TaskPlayAnimAdvanced(playerPed, "reaction@intimidation@1h", "intro", GetEntityCoords(playerPed, true), 0, 0, GetEntityHeading(playerPed), 8.0, 3.0, -1, 50, 0, 0, 0)
-    Wait(1600)
-	ClearPedTasks(playerPed)
-    canFire = true
-end
-
-function RemoveWeaponAnimation(weapon)
-    local playerPed = PlayerPedId()
-    local hash = GetHashKey(weapon)
-    canFire = false
-    disableWeaponFiring()
-    if not HasAnimDictLoaded("reaction@intimidation@1h") then
-        loadAnimDict( "reaction@intimidation@1h" )
-    end
-    TaskPlayAnimAdvanced(playerPed, "reaction@intimidation@1h", "outro", GetEntityCoords(playerPed, true), 0, 0, GetEntityHeading(playerPed), 8.0, 3.0, -1, 50, 0, 0, 0)
-    Wait(1600)
-	ClearPedTasks(playerPed)
-    canFire = true
-end
-
 function GetClosestPlayer()
     local closestPlayers = QBCore.Functions.GetPlayersFromCoords()
     local closestDistance = -1
     local closestPlayer = -1
-    local coords = GetEntityCoords(GetPlayerPed(-1))
+    local coords = GetEntityCoords(PlayerPedId())
 
     for i=1, #closestPlayers, 1 do
         if closestPlayers[i] ~= PlayerId() then
