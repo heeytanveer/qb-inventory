@@ -937,6 +937,7 @@ body {
 	height: 45px;
     top: 365%;
     left: 0%;
+    cursor: none;
     position: absolute;
     background-color:#30475e;
     color: #ffffff;
@@ -1052,6 +1053,7 @@ body {
     position: absolute;
     bottom: 0;
     width: 100%;
+    cursor: none;
     height: auto;
     background-color: #191e25db;
     /* background-color: #191e25db;*/
