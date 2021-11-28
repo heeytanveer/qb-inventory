@@ -15,6 +15,17 @@ local isCrafting = false
 local isHotbar = false
 local showTrunkPos = false
 
+Citizen.CreateThread(function()
+    while true do
+        Citizen.Wait(1)
+        DisableControlAction(0, 37, true) -- TAB
+        DisableControlAction(0, 157, true) -- 1
+        DisableControlAction(0, 158, true) -- 2
+        DisableControlAction(0, 160, true) -- 3
+        DisableControlAction(0, 164, true) -- 4
+        DisableControlAction(0, 165, true) -- 5
+    end
+end)
 
 RegisterNetEvent('QBCore:Client:OnPlayerLoaded', function()
     LocalPlayer.state:set("inv_busy", false, true)
