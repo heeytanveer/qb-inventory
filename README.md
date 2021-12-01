@@ -29,4 +29,4 @@ All Credits to go to the original qbcore-framework repository
 
 **[Video](https://streamable.com/5tpgg0)**
 
-![General](https://i.imgur.com/3S5NxBp.png)
+![General](https://i.imgur.com/eenM0NR.png)
