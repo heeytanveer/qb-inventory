@@ -228,7 +228,6 @@ body {
     line-height: 2.2vh;
     text-align: center;
     text-transform: uppercase;
-
     letter-spacing: 0.02em;
     font-size:9px;
     font-family: 'Lato', monospace;
@@ -244,11 +243,12 @@ body {
 
 .item-slot-quality {
     position: absolute;
-    bottom: 2vh;
+    bottom: 0;
     width: 100%;
     height: 0.3vh;
-    background-color: rgba(32, 6, 6, 0.15);
-
+    background-color: #191e2500;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px; 
 }
 
 .item-slot-quality-bar {
@@ -258,6 +258,8 @@ body {
     height: 100%;
     background-color: #00f9ba;
     box-shadow: inset 0 0 .25vh 0 rgba(0, 0, 0, 0.2);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px; 
 }
 
 .item-slot-quality p {
@@ -884,12 +886,14 @@ body {
     background-color: #15171f;
     overflow: visible;
     margin-top: 6.8%;
+    border-radius: 50px;
 }
 
 #progressbar-other {
     background-color: #15171f;
     overflow: visible;
     margin-top: 4%;
+    border-radius: 50px;
   }
 
 .progress-player, .progress-other  {
@@ -898,6 +902,7 @@ body {
   width: 0%;
   height: 5px;
   max-width: 100%;
+  border-radius: 50px;
 }
 
 
@@ -1026,12 +1031,10 @@ body {
     opacity: 1.5;
 } 
 
-
 .help-menu { 
   background-color: #191e25;
   border-radius: 5px;
   border: 1px solid rgba(220, 240, 220, 0.05);
-
   color: rgba(220, 220, 220, 1);
   display: none;
   font-size: 1.5vh;
@@ -1041,8 +1044,6 @@ body {
   top: 15%;
   width: 33%;
 }
-
-
 
 .item-slot {
     position: relative;
@@ -1063,12 +1064,9 @@ body {
     cursor: none;
     height: auto;
     background-color: #191e25db;
-    /* background-color: #191e25db;*/
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px; 
 }
-
-
 
 .z-hotbar-inventory {
     display: none;
