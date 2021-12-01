@@ -427,7 +427,7 @@ function FormatItemInfo(itemData, dom) {
             $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
         } else if (itemData.name == "carkeys") {
             $(".item-info-title").html('<p>' + itemData.info.model + ' Car Key</p>')
-            $(".item-info-description").html('<p><strong></strong><span></span></p><p><strong>Model: </strong><span>' + itemData.info.model + '</span></p><p><strong></strong><span></span></p><p><strong>License Plate: </strong><span>' + itemData.info.plate + '</span></p>');
+            $(".item-info-description").html('<p>Model: ' + itemData.info.model + '</p><p>License Plate: ' + itemData.info.plate + '</p>');
             $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
         } else if (itemData.name == "carstashkey") {
             $(".item-info-title").html('<p>' + itemData.info.car + ' Stash Key</p>')
@@ -601,7 +601,20 @@ function FormatItemInfo(itemData, dom) {
             $(".item-info-title").html('<p>' + itemData.label + '</p>')
             $(".item-info-description").html('<p>Strain: ' + itemData.info.strain + '</p>Potency: ' + itemData.info.potency + '</p>Type: ' + itemData.info.type + '<p>Thc: ' + itemData.info.thc + '%</p>');
             $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
-        } else {
+
+        } else if (itemData.name == "casino_member_validated") {
+            $(".item-info-title").html('<p>' + itemData.label + '</p>')
+            $(".item-info-description").html('<p>Diamond Casino Member:  ' + itemData.info.owner);
+            $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
+        } else if (itemData.name == "casino_vip_validated") {
+            $(".item-info-title").html('<p>' + itemData.label + '</p>')
+            $(".item-info-description").html('<p>Diamond Casino V.I.P:  ' + itemData.info.owner);
+            $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
+        }
+
+
+
+        else {
             $(".item-info-title").html('<p>' + itemData.label + '</p>')
             $(".item-info-description").html('<p>' + itemData.description + '</p>')
             $(".item-info-stats").html('<p>Weight: ' + ((itemData.weight * itemData.amount) / 1000).toFixed(1) + ' | Amount: ' + itemData.amount + ' | Quality: ' + itemData.info.quality.toFixed(0) + '%</p>')
@@ -1038,7 +1051,7 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount, $toData) {
 
                     var ItemLabel = '<div class="item-slot-label"><p>' + newData.label + '</p></div><div class="item-slot-quality"><div class="item-slot-quality-bar"><p>' + newData.info.quality + '</p> </div></div>';
                     if (newData.info.quality == 100) {
-                        qualityLabel = "PERFECT";
+                        qualityLabel = "";
                     }
 
 
@@ -1070,15 +1083,15 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount, $toData) {
                             let StartDate = new Date(newData.info.date).getTime()
                             newData.info.quality = 100 - ((((Date.now() / 1000) - (StartDate + 3600)) / Time) * 100)
                         }
-                        qualityLabel = "PERFECT"
+                        qualityLabel = ""
                         if (newData.info.quality == undefined) { newData.info.quality = 100.0; }
-                        var QualityColor = "rgb(39, 174, 96)";
+                        var QualityColor = "#00f9ba";
                         if (newData.info.quality < 26) {
                             QualityColor = "rgb(192, 57, 43)";
                         } else if (newData.info.quality > 25 && newData.info.quality < 51) {
                             QualityColor = "rgb(230, 126, 34)";
                         } else if (newData.info.quality >= 50) {
-                            QualityColor = "rgb(39, 174, 96)";
+                            QualityColor = "#00f9ba";
                         }
                         if (newData.info.quality !== undefined) {
                             if (newData.info.expire !== undefined) {
@@ -1091,16 +1104,16 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount, $toData) {
                             qualityLabel = (newData.info.quality);
                         }
                         if (newData.info.quality >= 98.0) {
-                            qualityLabel = "PERFECT";
+                            qualityLabel = "";
                         }
                         if (newData.info.quality <= 0.0) {
-                            qualityLabel = "DESTROYED";
+                            qualityLabel = "";
                         }
                         if (newData.info.quality > 0 && newData.info.quality <= 5) {
-                            qualityLabel = "ALMOST DESTROYED";
+                            qualityLabel = "";
                         }
                         if (newData.info.quality > 5 && newData.info.quality <= 10) {
-                            qualityLabel = "FALLING APART";
+                            qualityLabel = "";
                         }
                         $toInv.find("[data-slot=" + $toSlot + "]").find(".item-slot-quality-bar").css({
                             "width": qualityLabel + "%",
@@ -1166,13 +1179,13 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount, $toData) {
                             newData.info.quality = 100 - ((((Date.now() / 1000) - (StartDate + 3600)) / Time) * 100)
                         }
                         if (newData.info.quality == undefined) { newData.info.quality = 100.0; }
-                        var QualityColor = "rgb(39, 174, 96)";
+                        var QualityColor = "#00f9ba";
                         if (newData.info.quality < 26) {
                             QualityColor = "rgb(192, 57, 43)";
                         } else if (newData.info.quality > 25 && newData.info.quality < 51) {
                             QualityColor = "rgb(230, 126, 34)";
                         } else if (newData.info.quality >= 50) {
-                            QualityColor = "rgb(39, 174, 96)";
+                            QualityColor = "#00f9ba";
                         }
                         if (newData.info.quality !== undefined) {
                             if (newData.info.expire !== undefined) {
@@ -1181,19 +1194,19 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount, $toData) {
                                 qualityLabel = (newData.info.quality).toFixed();
                             }
                         } else {
-                            qualityLabel = "PERFECT";
+                            qualityLabel = "";
                         }
                         if (newData.info.quality >= 98.0) {
-                            qualityLabel = "PERFECT";
+                            qualityLabel = "";
                         }
                         if (newData.info.quality == 0) {
-                            qualityLabel = "DESTROYED";
+                            qualityLabel = "";
                         }
                         if (newData.info.quality <= 5) {
-                            qualityLabel = "ALMOST DESTROYED";
+                            qualityLabel = "";
                         }
                         if (newData.info.quality <= 10) {
-                            qualityLabel = "FALLING APART";
+                            qualityLabel = "";
                         }
                         $toInv.find("[data-slot=" + $toSlot + "]").find(".item-slot-quality-bar").css({
                             "width": qualityLabel + "%",
@@ -1249,13 +1262,13 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount, $toData) {
                                 qualityLabel = (newDataFrom.info.quality).toFixed();
                             }
                             if (newDataFrom.info.quality == undefined) { newDataFrom.info.quality = 100.0; }
-                            var QualityColor = "rgb(39, 174, 96)";
+                            var QualityColor = "#00f9ba";
                             if (newDataFrom.info.quality < 26) {
                                 QualityColor = "rgb(192, 57, 43)";
                             } else if (newDataFrom.info.quality > 25 && newDataFrom.info.quality < 51) {
                                 QualityColor = "rgb(230, 126, 34)";
                             } else if (newDataFrom.info.quality >= 50) {
-                                QualityColor = "rgb(39, 174, 96)";
+                                QualityColor = "#00f9ba";
                             }
                             if (newDataFrom.info.quality !== undefined) {
                                 if (newDataFrom.info.expire !== undefined) {
@@ -1265,19 +1278,19 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount, $toData) {
                                     qualityLabel = (newDataFrom.info.quality).toFixed();
                                 }
                             } else {
-                                qualityLabel = "PERFECT";
+                                qualityLabel = "";
                             }
                             if (newDataFrom.info.quality >= 98.0) {
-                                qualityLabel = "PERFECT";
+                                qualityLabel = "";
                             }
                             if (newDataFrom.info.quality <= 0.0) {
-                                qualityLabel = "DESTROYED";
+                                qualityLabel = "";
                             }
                             if (newDataFrom.info.quality > 0 && newDataFrom.info.quality <= 5) {
-                                qualityLabel = "ALMOST DESTROYED";
+                                qualityLabel = "";
                             }
                             if (newDataFrom.info.quality > 5 && newDataFrom.info.quality <= 10) {
-                                qualityLabel = "FALLING APART";
+                                qualityLabel = "";
                             }
                             $fromInv.find("[data-slot=" + $fromSlot + "]").find(".item-slot-quality-bar").css({
                                 "width": qualityLabel + "%",
@@ -1354,13 +1367,13 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount, $toData) {
                         fromData.info.quality = 100 - ((((Date.now() / 1000) - (StartDate + 3600)) / Time) * 100)
                     }
                     if (fromData.info.quality == undefined) { fromData.info.quality = 100.0; }
-                    var QualityColor = "rgb(39, 174, 96)";
+                    var QualityColor = "#00f9ba";
                     if (fromData.info.quality < 26) {
                         QualityColor = "rgb(192, 57, 43)";
                     } else if (fromData.info.quality > 25 && fromData.info.quality < 51) {
                         QualityColor = "rgb(230, 126, 34)";
                     } else if (fromData.info.quality >= 50) {
-                        QualityColor = "rgb(39, 174, 96)";
+                        QualityColor = "#00f9ba";
                     }
                     if (fromData.info.quality !== undefined) {
                         if (fromData.info.expire !== undefined) {
@@ -1370,19 +1383,19 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount, $toData) {
                             qualityLabel = (fromData.info.quality).toFixed();
                         }
                     } else {
-                        qualityLabel = "PERFECT";
+                        qualityLabel = "";
                     }
                     if (fromData.info.quality >= 98.0) {
-                        qualityLabel = "PERFECT";
+                        qualityLabel = "";
                     }
                     if (fromData.info.quality <= 0.0) {
-                        qualityLabel = "DESTROYED";
+                        qualityLabel = "";
                     }
                     if (fromData.info.quality > 0 && fromData.info.quality <= 5) {
-                        qualityLabel = "ALMOST DESTROYED";
+                        qualityLabel = "";
                     }
                     if (fromData.info.quality > 5 && fromData.info.quality <= 10) {
-                        qualityLabel = "FALLING APART";
+                        qualityLabel = "";
                     }
                     $toInv.find("[data-slot=" + $toSlot + "]").find(".item-slot-quality-bar").css({
                         "width": qualityLabel + "%",
@@ -1400,7 +1413,7 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount, $toData) {
 
                     var ItemLabel = '<div class="item-slot-label"><p>' + toData.label + '</p></div><div class="item-slot-quality"><div class="item-slot-quality-bar"><p>' + toData.info.quality + '</p> </div></div>';
                     if (toData.info.quality == 100) {
-                        qualityLabel = "PERFECT";
+                        qualityLabel = "";
                     }
 
 
@@ -1437,13 +1450,13 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount, $toData) {
                             toData.info.quality = 100 - ((((Date.now() / 1000) - (StartDate + 3600)) / Time) * 100)
                         }
                         if (toData.info.quality == undefined) { toData.info.quality = 100.0; }
-                        var QualityColor = "rgb(39, 174, 96)";
+                        var QualityColor = "#00f9ba";
                         if (toData.info.quality < 26) {
                             QualityColor = "rgb(192, 57, 43)";
                         } else if (toData.info.quality > 25 && toData.info.quality < 51) {
                             QualityColor = "rgb(230, 126, 34)";
                         } else if (toData.info.quality >= 50) {
-                            QualityColor = "rgb(39, 174, 96)";
+                            QualityColor = "#00f9ba";
                         }
                         if (toData.info.quality !== undefined) {
                             if (toData.info.expire !== undefined) {
@@ -1453,19 +1466,19 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount, $toData) {
                                 qualityLabel = (toData.info.quality).toFixed();
                             }
                         } else {
-                            qualityLabel = "PERFECT";
+                            qualityLabel = "";
                         }
                         if (toData.info.quality <= 0.0) {
-                            qualityLabel = "DESTROYED";
+                            qualityLabel = "";
                         }
                         if (toData.info.quality > 0 && toData.info.quality <= 5) {
-                            qualityLabel = "ALMOST DESTROYED";
+                            qualityLabel = "";
                         }
                         if (toData.info.quality > 5 && toData.info.quality <= 10) {
-                            qualityLabel = "FALLING APART";
+                            qualityLabel = "";
                         }
                         if (toData.info.quality >= 98.0) {
-                            qualityLabel = "PERFECT";
+                            qualityLabel = "";
                         }
                         $fromInv.find("[data-slot=" + $fromSlot + "]").find(".item-slot-quality-bar").css({
                             "width": qualityLabel + "%",
@@ -1567,13 +1580,13 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount, $toData) {
                     if (newDataTo.info.quality == undefined) {
                         newDataTo.info.quality = 100.0;
                     }
-                    var QualityColor = "rgb(39, 174, 96)";
+                    var QualityColor = "#00f9ba";
                     if (newDataTo.info.quality < 26) {
                         QualityColor = "rgb(192, 57, 43)";
                     } else if (newDataTo.info.quality > 25 && newDataTo.info.quality < 51) {
                         QualityColor = "rgb(230, 126, 34)";
                     } else if (newDataTo.info.quality >= 50) {
-                        QualityColor = "rgb(39, 174, 96)";
+                        QualityColor = "#00f9ba";
                     }
                     if (newDataTo.info.quality !== undefined) {
                         if (newDataTo.info.expire !== undefined) {
@@ -1582,19 +1595,19 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount, $toData) {
                             qualityLabel = (newDataTo.info.quality).toFixed();
                         }
                     } else {
-                        qualityLabel = "PERFECT";
+                        qualityLabel = "";
                     }
                     if (newDataTo.info.quality >= 98.0) {
-                        qualityLabel = "PERFECT";
+                        qualityLabel = "";
                     }
                     if (newDataTo.info.quality <= 0.0) {
-                        qualityLabel = "DESTROYED";
+                        qualityLabel = "";
                     }
                     if (newDataTo.info.quality > 0 && newDataTo.info.quality <= 5) {
-                        qualityLabel = "ALMOST DESTROYED";
+                        qualityLabel = "";
                     }
                     if (newDataTo.info.quality > 5 && newDataTo.info.quality <= 10) {
-                        qualityLabel = "FALLING APART";
+                        qualityLabel = "";
                     }
                     $toInv.find("[data-slot=" + $toSlot + "]").find(".item-slot-quality-bar").css({
                         "width": qualityLabel + "%",
@@ -1663,32 +1676,32 @@ function swap($fromSlot, $toSlot, $fromInv, $toInv, $toAmount, $toData) {
                             newDataFrom.info.quality = 100 - ((((Date.now() / 1000) - (StartDate + 3600)) / Time) * 100)
                         }
                         if (newDataFrom.info.quality == undefined) { newDataFrom.info.quality = 100.0; }
-                        var QualityColor = "rgb(39, 174, 96)";
+                        var QualityColor = "#00f9ba";
                         if (newDataFrom.info.quality < 26) {
                             QualityColor = "rgb(192, 57, 43)";
                         } else if (newDataFrom.info.quality > 25 && newDataFrom.info.quality < 51) {
                             QualityColor = "rgb(230, 126, 34)";
                         } else if (newDataFrom.info.quality >= 50) {
-                            QualityColor = "rgb(39, 174, 96)";
+                            QualityColor = "#00f9ba";
                         }
                         if (newDataFrom.info.quality !== undefined) {
                             if (newDataFrom.info.expire !== undefined) {
                                 qualityLabel = (newDataFrom.info.quality).toFixed();
                             }
                         } else {
-                            qualityLabel = "PERFECT";
+                            qualityLabel = "";
                         }
                         if (newDataFrom.info.quality >= 98.0) {
-                            qualityLabel = "PERFECT";
+                            qualityLabel = "";
                         }
                         if (newDataFrom.info.quality <= 0.0) {
-                            qualityLabel = "DESTROYED";
+                            qualityLabel = "";
                         }
                         if (newDataFrom.info.quality > 0 && newDataFrom.info.quality <= 5) {
-                            qualityLabel = "ALMOST DESTROYED";
+                            qualityLabel = "";
                         }
                         if (newDataFrom.info.quality > 5 && newDataFrom.info.quality <= 10) {
-                            qualityLabel = "FALLING APART";
+                            qualityLabel = "";
                         }
                         $fromInv.find("[data-slot=" + $fromSlot + "]").find(".item-slot-quality-bar").css({
                             "width": qualityLabel + "%",
@@ -1770,28 +1783,28 @@ var requiredItemOpen = false;
                     let StartDate = new Date(item.info.date).getTime()
                     item.info.quality = 100 - ((((Date.now() / 1000) - (StartDate + 3600)) / Time) * 100)
                 }
-                qualityLabel = "PERFECT";
+                qualityLabel = "";
                 if (item.info.quality == undefined) { item.info.quality = 100; }
-                var QualityColor = "rgb(39, 174, 96)";
+                var QualityColor = "#00f9ba";
                 if (item.info.quality < 26) {
                     QualityColor = "rgb(192, 57, 43)";
                 } else if (item.info.quality > 25 && item.info.quality < 51) {
                     QualityColor = "rgb(230, 126, 34)";
                 } else if (item.info.quality >= 50) {
-                    QualityColor = "rgb(39, 174, 96)";
+                    QualityColor = "#00f9ba";
                 }
                 if (item.info.quality >= 98.0) {
-                    qualityLabel = "PERFECT";
+                    qualityLabel = "";
                 }
                 if (item.info.quality <= 0.0) {
                     item.info.quality = 0;
-                    qualityLabel = "DESTROYED";
+                    qualityLabel = "";
                 }
                 if (item.info.quality > 0 && item.info.quality <= 5) {
-                    qualityLabel = "ALMOST DESTROYED";
+                    qualityLabel = "";
                 }
                 if (item.info.quality > 5 && item.info.quality <= 10) {
-                    qualityLabel = "FALLING APART";
+                    qualityLabel = "";
                 }
                 if (item.info.quality !== undefined) {
                     qualityLabel = (item.info.quality).toFixed();
@@ -1799,15 +1812,11 @@ var requiredItemOpen = false;
                     qualityLabel = (item.info.quality);
                 }
                 if (item.info.quality <= 0) {
-                    qualityLabel = "DESTROYED";
+                    qualityLabel = "";
                     if (!IsOtherInventory) {
                         if (!IsHotbar) {
                             $(".player-inventory").find("[data-slot=" + item.slot + "]").find(".item-slot-quality-bar").css({
                                 "width": qualityLabel + "%",
-                                "background-color": QualityColor
-                            }).find('p').html(qualityLabel);
-                            $(".player-inventory2").find("[data-slot=" + item.slot + "]").find(".item-slot-quality-bar").css({
-                                "width": "100%",
                                 "background-color": QualityColor
                             }).find('p').html(qualityLabel);
                         } else {
@@ -1824,14 +1833,10 @@ var requiredItemOpen = false;
                     }
                 }
                 if (item.info.quality > 0 && item.info.quality <= 5) {
-                    qualityLabel = "ALMOST DESTROYED";
+                    qualityLabel = "";
                     if (!IsOtherInventory) {
                         if (!IsHotbar) {
                             $(".player-inventory").find("[data-slot=" + item.slot + "]").find(".item-slot-quality-bar").css({
-                                "width": qualityLabel + "%",
-                                "background-color": QualityColor
-                            }).find('p').html(qualityLabel);
-                            $(".player-inventory2").find("[data-slot=" + item.slot + "]").find(".item-slot-quality-bar").css({
                                 "width": qualityLabel + "%",
                                 "background-color": QualityColor
                             }).find('p').html(qualityLabel);
@@ -1849,15 +1854,11 @@ var requiredItemOpen = false;
                     }
                 }
                 if (item.info.quality > 5 && item.info.quality <= 10) {
-                    qualityLabel = "FALLING APART";
+                    qualityLabel = "";
                     if (!IsOtherInventory) {
                         if (!IsHotbar) {
                             $(".player-inventory").find("[data-slot=" + item.slot + "]").find(".item-slot-quality-bar").css({
                                 "width": qualityLabel + "%",
-                                "background-color": QualityColor
-                            }).find('p').html(qualityLabel);
-                            $(".player-inventory2").find("[data-slot=" + item.slot + "]").find(".item-slot-quality-bar").css({
-                                "width": "100%",
                                 "background-color": QualityColor
                             }).find('p').html(qualityLabel);
                         } else {
@@ -1879,10 +1880,6 @@ var requiredItemOpen = false;
                                 "width": qualityLabel + "%",
                                 "background-color": QualityColor
                             }).find('p').html(qualityLabel);
-                            $(".player-inventory2").find("[data-slot=" + item.slot + "]").find(".item-slot-quality-bar").css({
-                                "width": "100%",
-                                "background-color": QualityColor
-                            }).find('p').html(qualityLabel);
                         } else {
                             $(".z-hotbar-inventory").find("[data-zhotbarslot=" + item.slot + "]").find(".item-slot-quality-bar").css({
                                 "width": qualityLabel + "%",
@@ -1897,15 +1894,11 @@ var requiredItemOpen = false;
                     }
                 }
                 if (item.info.quality >= 98.0) {
-                    qualityLabel = "PERFECT";
+                    qualityLabel = "";
                     if (!IsOtherInventory) {
                         if (!IsHotbar) {
                             $(".player-inventory").find("[data-slot=" + item.slot + "]").find(".item-slot-quality-bar").css({
                                 "width": qualityLabel + "%",
-                                "background-color": QualityColor
-                            }).find('p').html(qualityLabel);
-                            $(".player-inventory2").find("[data-slot=" + item.slot + "]").find(".item-slot-quality-bar").css({
-                                "width": "100%",
                                 "background-color": QualityColor
                             }).find('p').html(qualityLabel);
                         } else {
@@ -1924,10 +1917,6 @@ var requiredItemOpen = false;
                     if (!IsOtherInventory) {
                         if (!IsHotbar) {
                             $(".player-inventory").find("[data-slot=" + item.slot + "]").find(".item-slot-quality-bar").css({
-                                "width": qualityLabel + "%",
-                                "background-color": QualityColor
-                            }).find('p').html(qualityLabel);
-                            $(".player-inventory2").find("[data-slot=" + item.slot + "]").find(".item-slot-quality-bar").css({
                                 "width": qualityLabel + "%",
                                 "background-color": QualityColor
                             }).find('p').html(qualityLabel);
@@ -1980,14 +1969,6 @@ var requiredItemOpen = false;
                 i +
                 '</p></div><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div>'
             );
-            $(".player-inventory2").append(
-                '<div class="item-slot" data-slot="' +
-                i +
-                '"><div class="item-slot-key"><p>' +
-                i +
-                '</p></div><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div>'
-            );
-
         }
         // Inventory
         for (i = 6; i < data.slots + 1; i++) {
@@ -1997,19 +1978,8 @@ var requiredItemOpen = false;
                     i +
                     '"><div class="item-slot-key"><p>6 <i class="fas fa-lock"></i></p></div><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div>'
                 );
-                $(".player-inventory2").append(
-                    '<div class="item-slot" data-slot="' +
-                    i +
-                    '"><div class="item-slot-key"><p>6 <i class="fas fa-lock"></i></p></div><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div>'
-                );
-
             } else {
                 $(".player-inventory").append(
-                    '<div class="item-slot" data-slot="' +
-                    i +
-                    '"><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div>'
-                );
-                $(".player-inventory2").append(
                     '<div class="item-slot" data-slot="' +
                     i +
                     '"><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div>'
@@ -2028,7 +1998,7 @@ var requiredItemOpen = false;
                 $(".other-inventory").append('<div class="item-slot" data-slot="' + i + '"><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div>');
             }
             $(".other-inventory .item-slot").css({
-                "background-color": "rgba(235, 235, 235, 0)"
+                "background-color": "rgba(0, 106, 255, 0.01)"
             });
         }
 
@@ -2036,7 +2006,7 @@ var requiredItemOpen = false;
             $.each(data.inventory, function (i, item) {
                 if (item != null) {
                     totalWeight += (item.weight * item.amount);
-                    qualityLabel = "PERFECT";
+                    qualityLabel = "";
                     var ItemLabel = '<div class="item-slot-label"><p>' + item.label + '</p></div><div class="item-slot-quality"><div class="item-slot-quality-bar"><p>' + qualityLabel + '</p></div></div>';
 
                     // if (item.info.quality != null) {
@@ -2050,20 +2020,20 @@ var requiredItemOpen = false;
                         item.info.quality = 100 - ((((Date.now() / 1000) - (StartDate + 3600)) / Time) * 100)
                         if (item.info.quality == null) {
                             item.info.quality = 100;
-                            qualityLabel = "PERFECT";
+                            qualityLabel = "";
                         }
                         if (item.info.quality >= 98.0) {
-                            qualityLabel = "PERFECT";
+                            qualityLabel = "";
                         }
                         if (item.info.quality <= 0.0) {
                             item.info.quality = 0;
-                            qualityLabel = "DESTROYED";
+                            qualityLabel = "";
                         }
                         if (item.info.quality > 0 && item.info.quality <= 5) {
-                            qualityLabel = "ALMOST DESTROYED";
+                            qualityLabel = "";
                         }
                         if (item.info.quality > 5 && item.info.quality <= 10) {
-                            qualityLabel = "FALLING APART";
+                            qualityLabel = "";
                         }
                         ItemLabel = '<div class="item-slot-label"><p>' + item.label + '</p></div><div class="item-slot-quality"><div class="item-slot-quality-bar"><p>' + qualityLabel + '</p> </div></div>';
                         TimeDurability = item.info.quality
@@ -2073,26 +2043,20 @@ var requiredItemOpen = false;
 
                     $(".player-inventory").find("[data-slot=" + item.slot + "]").addClass("item-drag");
                     $(".player-inventory").find("[data-slot=" + item.slot + "]").data("item", item);
-                    $(".player-inventory2").find("[data-slot=" + item.slot + "]").addClass("item-drag");
-                    $(".player-inventory2").find("[data-slot=" + item.slot + "]").data("item", item);
 
                     if (item.slot < 6) {
-                        // $(".player-inventory").find("[data-slot=" + item.slot + "]").addClass("item-drag");
+                        $(".player-inventory").find("[data-slot=" + item.slot + "]").addClass("item-drag");
                         $(".player-inventory").find("[data-slot=" + item.slot + "]").html('<div class="item-slot-key"><p>' + item.slot + '</p></div><div class="item-slot-img"><img src="images/' + item.image + '" alt="' + item.name + '" /></div><div class="item-slot-amount"><p>' + item.amount + ' (' + ((item.weight * item.amount) / 1000).toFixed(1) + ')</p></div>' + ItemLabel);
-                        // $(".player-inventory").find("[data-slot=" + item.slot + "]").data("item", item);
-                        $(".player-inventory2").find("[data-slot=" + item.slot + "]").html('<div class="item-slot-key"><p>' + item.slot + '</p></div><div class="item-slot-img"><img src="images/' + item.image + '" alt="' + item.name + '" /></div><div class="item-slot-amount"><p>' + item.amount + ' (' + ((item.weight * item.amount) / 1000).toFixed(1) + ')</p></div>' + ItemLabel);
+                        $(".player-inventory").find("[data-slot=" + item.slot + "]").data("item", item);
 
                     } else if (item.slot == 41) {
-                        // $(".player-inventory").find("[data-slot=" + item.slot + "]").addClass("item-drag");
+                        $(".player-inventory").find("[data-slot=" + item.slot + "]").addClass("item-drag");
                         $(".player-inventory").find("[data-slot=" + item.slot + "]").html('<div class="item-slot-key"><p>6 <i class="fas fa-lock"></i></p></div><div class="item-slot-img"><img src="images/' + item.image + '" alt="' + item.name + '" /></div><div class="item-slot-amount"><p>' + item.amount + " (" + ((item.weight * item.amount) / 1000).toFixed(1) + ")</p></div>" + ItemLabel);
-                        $(".player-inventory2").find("[data-slot=" + item.slot + "]").html('<div class="item-slot-key"><p>6 <i class="fas fa-lock"></i></p></div><div class="item-slot-img"><img src="images/' + item.image + '" alt="' + item.name + '" /></div><div class="item-slot-amount"><p>' + item.amount + " (" + ((item.weight * item.amount) / 1000).toFixed(1) + ")</p></div>" + ItemLabel);
-
-                        // $(".player-inventory") .find("[data-slot=" + item.slot + "]").data("item", item);
+                        $(".player-inventory").find("[data-slot=" + item.slot + "]").data("item", item);
                     } else {
-                        // $(".player-inventory").find("[data-slot=" + item.slot + "]").addClass("item-drag");
+                        $(".player-inventory").find("[data-slot=" + item.slot + "]").addClass("item-drag");
                         $(".player-inventory").find("[data-slot=" + item.slot + "]").html('<div class="item-slot-img"><img src="images/' + item.image + '" alt="' + item.name + '" /></div><div class="item-slot-amount"><p>' + item.amount + ' (' + ((item.weight * item.amount) / 1000).toFixed(1) + ')</p></div>' + ItemLabel);
-                        // $(".player-inventory").find("[data-slot=" + item.slot + "]").data("item", item);
-                        $(".player-inventory2").find("[data-slot=" + item.slot + "]").html('<div class="item-slot-img"><img src="images/' + item.image + '" alt="' + item.name + '" /></div><div class="item-slot-amount"><p>' + item.amount + ' (' + ((item.weight * item.amount) / 1000).toFixed(1) + ')</p></div>' + ItemLabel);
+                        $(".player-inventory").find("[data-slot=" + item.slot + "]").data("item", item);
 
                     }
                     Inventory.QualityCheck(item, false, false);
@@ -2104,7 +2068,7 @@ var requiredItemOpen = false;
             $.each(data.other.inventory, function (i, item) {
                 if (item != null) {
                     totalWeightOther += (item.weight * item.amount);
-                    qualityLabel = "PERFECT";
+                    qualityLabel = "";
                     var ItemLabel = '<div class="item-slot-label"><p>' + item.label + '</p></div><div class="item-slot-quality"><div class="item-slot-quality-bar"><p>' + qualityLabel + '</p></div></div>';
 
                     if (item.info.expire != null) {
@@ -2113,17 +2077,17 @@ var requiredItemOpen = false;
                         let StartDate = new Date(item.info.date).getTime()
                         item.info.quality = 100 - ((((Date.now() / 1000) - (StartDate + 3600)) / Time) * 100)
                         if (item.info.quality >= 98.0) {
-                            qualityLabel = "PERFECT";
+                            qualityLabel = "";
                         }
                         if (item.info.quality <= 0.0) {
                             item.info.quality = 0;
-                            qualityLabel = "DESTROYED";
+                            qualityLabel = "";
                         }
                         if (item.info.quality > 0 && item.info.quality <= 5) {
-                            qualityLabel = "ALMOST DESTROYED";
+                            qualityLabel = "";
                         }
                         if (item.info.quality > 5 && item.info.quality <= 10) {
-                            qualityLabel = "FALLING APART";
+                            qualityLabel = "";
                         }
                         ItemLabel = '<div class="item-slot-label"><p>' + item.label + '</p></div><div class="item-slot-quality"><div class="item-slot-quality-bar"><p>' + qualityLabel + '</p> </div></div>';
                         TimeDurability = item.info.quality
@@ -2225,7 +2189,6 @@ var requiredItemOpen = false;
         totalWeight = 0;
         totalWeightOther = 0;
         $(".player-inventory").find(".item-slot").remove();
-        $(".player-inventory2").find(".item-slot").remove();
         $(".ply-hotbar-inventory").find(".item-slot").remove();
         if (data.error) {
             Inventory.Error();
@@ -2238,19 +2201,8 @@ var requiredItemOpen = false;
                     i +
                     '"><div class="item-slot-key"><p>6 <i class="fas fa-lock"></i></p></div><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div>'
                 );
-                $(".player-inventory2").append(
-                    '<div class="item-slot" data-slot="' +
-                    i +
-                    '"><div class="item-slot-key"><p>6 <i class="fas fa-lock"></i></p></div><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div>'
-                );
-
             } else {
                 $(".player-inventory").append(
-                    '<div class="item-slot" data-slot="' +
-                    i +
-                    '"><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div>'
-                );
-                $(".player-inventory2").append(
                     '<div class="item-slot" data-slot="' +
                     i +
                     '"><div class="item-slot-img"></div><div class="item-slot-label"><p>&nbsp;</p></div></div>'
@@ -2265,21 +2217,21 @@ var requiredItemOpen = false;
             if (item.info.expire != null) {
                 const ConvertTime = 60 * 24 * item.info.expire;
                 const Time = 60 * ConvertTime;
-                qualityLabel = "PERFECT";
+                qualityLabel = "";
                 let StartDate = new Date(item.info.date).getTime()
                 item.info.quality = 100 - ((((Date.now() / 1000) - (StartDate + 3600)) / Time) * 100)
                 if (item.info.quality >= 98.0) {
-                    qualityLabel = "PERFECT";
+                    qualityLabel = "";
                 }
                 if (item.info.quality <= 0.0) {
                     item.info.quality = 0;
-                    qualityLabel = "DESTROYED";
+                    qualityLabel = "";
                 }
                 if (item.info.quality > 0 && item.info.quality <= 5) {
-                    qualityLabel = "ALMOST DESTROYED";
+                    qualityLabel = "";
                 }
                 if (item.info.quality > 5 && item.info.quality <= 10) {
-                    qualityLabel = "FALLING APART";
+                    qualityLabel = "";
                 }
                 if (item.info.quality !== undefined) {
                     qualityLabel = (item.info.quality).toFixed();
@@ -2297,27 +2249,19 @@ var requiredItemOpen = false;
 
                 $(".player-inventory").find("[data-slot=" + item.slot + "]").addClass("item-drag");
                 $(".player-inventory").find("[data-slot=" + item.slot + "]").data("item", item);
-                $(".player-inventory2").find("[data-slot=" + item.slot + "]").addClass("item-drag");
-                $(".player-inventory2").find("[data-slot=" + item.slot + "]").data("item", item);
 
                 if (item.slot < 6) {
-                    // $(".player-inventory").find("[data-slot=" + item.slot + "]").addClass("item-drag");
+                    $(".player-inventory").find("[data-slot=" + item.slot + "]").addClass("item-drag");
                     $(".player-inventory").find("[data-slot=" + item.slot + "]").html('<div class="item-slot-key"><p>' + item.slot + '</p></div><div class="item-slot-img"><img src="images/' + item.image + '" alt="' + item.name + '" /></div><div class="item-slot-amount"><p>' + item.amount + ' (' + ((item.weight * item.amount) / 1000).toFixed(1) + ')</p></div><div class="item-slot-label"><p>' + item.label + '</p></div>');
-                    $(".player-inventory2").find("[data-slot=" + item.slot + "]").html('<div class="item-slot-key"><p>' + item.slot + '</p></div><div class="item-slot-img"><img src="images/' + item.image + '" alt="' + item.name + '" /></div><div class="item-slot-amount"><p>' + item.amount + ' (' + ((item.weight * item.amount) / 1000).toFixed(1) + ')</p></div><div class="item-slot-label"><p>' + item.label + '</p></div>');
-
-                    // $(".player-inventory").find("[data-slot=" + item.slot + "]").data("item", item);
+                    $(".player-inventory").find("[data-slot=" + item.slot + "]").data("item", item);
                 } else if (item.slot == 41) {
-                    // $(".player-inventory").find("[data-slot=" + item.slot + "]").addClass("item-drag");
+                    $(".player-inventory").find("[data-slot=" + item.slot + "]").addClass("item-drag");
                     $(".player-inventory").find("[data-slot=" + item.slot + "]").html('<div class="item-slot-key"><p>6 <i class="fas fa-lock"></i></p></div><div class="item-slot-img"><img src="images/' + item.image + '" alt="' + item.name + '" /></div><div class="item-slot-amount"><p>' + item.amount + " (" + ((item.weight * item.amount) / 1000).toFixed(1) + ')</p></div><div class="item-slot-label"><p>' + item.label + "</p></div>");
-
-                    $(".player-inventory2").find("[data-slot=" + item.slot + "]").html('<div class="item-slot-key"><p>6 <i class="fas fa-lock"></i></p></div><div class="item-slot-img"><img src="images/' + item.image + '" alt="' + item.name + '" /></div><div class="item-slot-amount"><p>' + item.amount + " (" + ((item.weight * item.amount) / 1000).toFixed(1) + ')</p></div><div class="item-slot-label"><p>' + item.label + "</p></div>");
-                    // $(".player-inventory").find("[data-slot=" + item.slot + "]").data("item", item);
+                    $(".player-inventory").find("[data-slot=" + item.slot + "]").data("item", item);
                 } else {
-                    // $(".player-inventory").find("[data-slot=" + item.slot + "]").addClass("item-drag");
+                    $(".player-inventory").find("[data-slot=" + item.slot + "]").addClass("item-drag");
                     $(".player-inventory").find("[data-slot=" + item.slot + "]").html('<div class="item-slot-img"><img src="images/' + item.image + '" alt="' + item.name + '" /></div><div class="item-slot-amount"><p>' + item.amount + ' (' + ((item.weight * item.amount) / 1000).toFixed(1) + ')</p></div><div class="item-slot-label"><p>' + item.label + '</p></div>');
-                    $(".player-inventory2").find("[data-slot=" + item.slot + "]").html('<div class="item-slot-img"><img src="images/' + item.image + '" alt="' + item.name + '" /></div><div class="item-slot-amount"><p>' + item.amount + ' (' + ((item.weight * item.amount) / 1000).toFixed(1) + ')</p></div><div class="item-slot-label"><p>' + item.label + '</p></div>');
-
-                    // $(".player-inventory").find("[data-slot=" + item.slot + "]").data("item", item);
+                    $(".player-inventory").find("[data-slot=" + item.slot + "]").data("item", item);
                 }
             }
         });
@@ -2349,13 +2293,13 @@ var requiredItemOpen = false;
 
             $.each(data.items, function (i, item) {
                 if (item != null) {
-                    var QualityColor = "rgb(39, 174, 96)";
+                    var QualityColor = "#00f9ba";
                     if (item.info.quality < 26) {
                         QualityColor = "rgb(192, 57, 43)";
                     } else if (item.info.quality > 25 && item.info.quality < 51) {
                         QualityColor = "rgb(230, 126, 34)";
                     } else if (item.info.quality >= 50) {
-                        QualityColor = "rgb(39, 174, 96)";
+                        QualityColor = "#00f9ba";
                     }
 
                     if (item.info.expire != null) {
@@ -2365,38 +2309,38 @@ var requiredItemOpen = false;
                         item.info.quality = 100 - ((((Date.now() / 1000) - (StartDate + 3600)) / Time) * 100)
                         qualityLabel = item.info.quality;
                         if (item.info.quality >= 98.0) {
-                            qualityLabel = "PERFECT";
+                            qualityLabel = "";
                         }
                         if (item.info.quality <= 0.0) {
                             item.info.quality = 0;
-                            qualityLabel = "DESTROYED";
+                            qualityLabel = "";
                         }
                         if (item.info.quality > 0 && item.info.quality <= 5) {
-                            qualityLabel = "ALMOST DESTROYED";
+                            qualityLabel = "";
                         }
                         if (item.info.quality > 5 && item.info.quality <= 10) {
-                            qualityLabel = "FALLING APART";
+                            qualityLabel = "";
                         }
                         var ItemLabel = '<div class="item-slot-label"><p>' + item.label + '</p></div><div class="item-slot-quality"><div class="item-slot-quality-bar"><p>' + qualityLabel + '</p> </div></div>';
                         TimeDurability = item.info.quality
                         QualityData = item;
                     } else {
-                        qualityLabel = "PERFECT";
+                        qualityLabel = "";
                         if (item.info.quality !== undefined) {
                             qualityLabel = item.info.quality;
                         }
                         if (item.info.quality >= 98.0) {
-                            qualityLabel = "PERFECT";
+                            qualityLabel = "";
                         }
                         if (item.info.quality <= 0.0) {
                             item.info.quality = 0;
-                            qualityLabel = "DESTROYED";
+                            qualityLabel = "";
                         }
                         if (item.info.quality > 0 && item.info.quality <= 5) {
-                            qualityLabel = "ALMOST DESTROYED";
+                            qualityLabel = "";
                         }
                         if (item.info.quality > 5 && item.info.quality <= 10) {
-                            qualityLabel = "FALLING APART";
+                            qualityLabel = "";
                         }
                         ItemLabel = '<div class="item-slot-label"><p>' + item.label + '</p></div><div class="item-slot-quality"><div class="item-slot-quality-bar"><p>' + qualityLabel + '</p></div></div>';
                     }
