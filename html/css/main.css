@@ -85,8 +85,8 @@ body {
     left: 10.2%;
     width: 31.5%;
     max-width: 31.5%;
-    height: 44.16%;
-    max-height: 44.16%;
+    height: 50%;
+    max-height: 50%;
     float: left;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -99,8 +99,8 @@ body {
     right: 10.2%;
     width: 31.5%;
     max-width: 31.5%;
-    height: 44.16%;
-    max-height: 44.16%;
+    height: 50%;
+    max-height: 50%;
     float: left;
     overflow-x: hidden;
     overflow-y: scroll;
@@ -246,7 +246,7 @@ body {
     position: absolute;
     bottom: 2vh;
     width: 100%;
-    height: 0.7vh;
+    height: 0.3vh;
     background-color: rgba(32, 6, 6, 0.15);
 
 }
@@ -256,12 +256,12 @@ body {
     bottom: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(111, 195, 111, 0.9);
+    background-color: #00f9ba;
     box-shadow: inset 0 0 .25vh 0 rgba(0, 0, 0, 0.2);
 }
 
 .item-slot-quality p {
-    color: rgb(247, 247, 247);
+    color: rgba(247, 247, 247, 0);
     font-size: .7vh;
     text-align: center;
     line-height: 0.9vh;
@@ -293,45 +293,49 @@ body {
 }
 
 #player-inv-label {
-    position: relative;
+    position: absolute;
     color: white;
     font-size: 18px;
     font-family: 'Lato', monospace;
     font-weight: bold;
-    letter-spacing: 0.1vh;
-    bottom: 15px;
+    letter-spacing: 0.2vh;
     float: left;
+    width: 16vh;
+    bottom: 0.5vh;
 }
 
 #player-inv-weight {
     color: white;
-    font-size: 11px;
+    font-size: 12px;
     font-family: 'Lato', monospace;
+    font-weight: bold;
     letter-spacing: 0.1vh;
     float: left;
-    margin-left: 78%;
-    margin-top: -3%;
+    margin-top: -4%;
+    margin-left: 84%;
 }
 
 #other-inv-label {
-    position: relative;
+    position: absolute;
     color: white;
     font-size: 18px;
     font-family: 'Lato', monospace;
     font-weight: bold;
-    letter-spacing: 0.1vh;
-    bottom: 15px;
+    letter-spacing: 0.2vh;
     float: left;
+    width: 16vh;
+    bottom: 0.3vh;
 }
 
 #other-inv-weight {
     color: white;
-    font-size: 11px;
+    font-size: 12px;
     font-family: 'Lato', monospace;
+    font-weight: bold;
     letter-spacing: 0.1vh;
     float: left;
-    margin-left: 78%;
-    margin-top: -3%;
+    margin-left: 77%;
+    margin-top: -3.5%;
 }
 
 .player-inv-weight {
@@ -877,20 +881,23 @@ body {
 }
 
 #progressbar {
-  background-color: #1114199f;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  overflow: visible;
-  border-radius: 50px;
+    background-color: #15171f;
+    overflow: visible;
+    margin-top: 6.8%;
 }
 
+#progressbar-other {
+    background-color: #15171f;
+    overflow: visible;
+    margin-top: 4%;
+  }
+
 .progress-player, .progress-other  {
-  background: linear-gradient(to right, #30475e, rgba(120, 10, 20) 600px);
+  background: linear-gradient(to right, #03f6b9, rgba(120, 10, 20) 600px);
   transition: width 1s, background-color 1s;
   width: 0%;
-  height: 15px;
+  height: 5px;
   max-width: 100%;
-  border-radius: 50px;
-
 }
 
 
@@ -1040,7 +1047,7 @@ body {
 .item-slot {
     position: relative;
     width: 10.5vh;
-    height: 13.5vh;
+    height: 12.35vh;
     float: left;
     margin-left: 2px;
     margin-bottom: 2px;
