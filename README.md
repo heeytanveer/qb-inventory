@@ -1,5 +1,4 @@
-# qb-inventory
-All Credits to go to the original qbcore-framework repository
+# qb-inventory reskin
 
 ## Info
 **[edited qb-weapons](https://github.com/dojwun/qb-weapons)** [W.I.P]
@@ -30,3 +29,7 @@ All Credits to go to the original qbcore-framework repository
 **[Video](https://streamable.com/5tpgg0)**
 
 ![General](https://i.imgur.com/ZA393yr.png)
+
+## 3.5 Reskin Coming Soon
+
+![General](https://i.imgur.com/hqE0Joe.png)
