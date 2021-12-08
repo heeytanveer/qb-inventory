@@ -120,7 +120,7 @@ function ItemsToItemInfo()
 	Config.CraftingItems = items
 end
 
-local toolBoxModles = {
+local toolBoxModels = {
     `prop_toolchest_05`,
     `prop_tool_bench02_ld`,
     `prop_tool_bench02`,
@@ -130,7 +130,7 @@ local toolBoxModles = {
     `prop_toolchest_05`,
     `prop_toolchest_04`,
 }
-exports['qb-target']:AddTargetModel(toolBoxModles, {
+exports['qb-target']:AddTargetModel(toolBoxModels, {
 		options = {
 			{
 				event = "inventory:client:WeaponAttachmentCrafting",
