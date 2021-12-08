@@ -1,5 +1,8 @@
 # qb-inventory reskin 
-<!-- Discord webhook test -->
+
+| If you are intested in recieving github updates join the community on **[Discord](https://discord.gg/NVsaunpesE)**! |
+|----|
+
 ## Info
 **[edited qb-weapons](https://github.com/dojwun/qb-weapons)** [W.I.P]
 - Mostly used for getting ammo values in qb-inventory tool tip
