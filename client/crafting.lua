@@ -120,5 +120,34 @@ function ItemsToItemInfo()
 	Config.CraftingItems = items
 end
 
-
+local toolBoxModles = {
+    `prop_toolchest_05`,
+    `prop_tool_bench02_ld`,
+    `prop_tool_bench02`,
+    `prop_toolchest_02`,
+    `prop_toolchest_03`,
+    `prop_toolchest_03_l2`,
+    `prop_toolchest_05`,
+    `prop_toolchest_04`,
+}
+exports['qb-target']:AddTargetModel(toolBoxModles, {
+		options = {
+			{
+				event = "inventory:client:WeaponAttachmentCrafting",
+				icon = "fas fa-wrench",
+				label = "Weapon Attachment Crafting", 
+			},
+			{
+				event = "inventory:client:Crafting",
+				icon = "fas fa-wrench",
+				label = "Item Crafting", 
+			},
+			-- {
+			-- 	event = "inventory:client:WeaponCrafting",
+			-- 	icon = "fas fa-wrench",
+			-- 	label = "Weapon Crafting", 
+			-- },
+		},
+    distance = 1.0
+})
 
