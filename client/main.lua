@@ -49,22 +49,6 @@ RegisterNetEvent('weapons:client:SetCurrentWeapon', function(data, bool)
     end
 end)
 
--- CloseInventory very rare if scuff 
-RegisterCommand('closeinv', function()
-	exports['textUi']:DrawTextUi('show', "Closing Inventory ")
-    Wait(1000)
-	exports['textUi']:DrawTextUi('show', "Closing Inventory .")
-    Wait(1000)
-	exports['textUi']:DrawTextUi('show', "Closing Inventory ..")
-    Wait(1000)
-    SendNUIMessage({
-        action = "close",
-    })
-	exports['textUi']:DrawTextUi('show', "Inventory Closed")
-    Wait(1000)
-    exports['textUi']:DrawTextUi('hide')
-end, false)
- 
 RegisterCommand('inventory', function()
     if not isCrafting and not inInventory then
         QBCore.Functions.GetPlayerData(function(PlayerData) 
@@ -184,7 +168,6 @@ RegisterCommand('inventory', function()
                     TriggerEvent("inventory:client:SetCurrentStash", Container)
                 else
                     TriggerEvent("InventoryAnim")		
-                    TriggerScreenblurFadeIn(1000)
                     TriggerServerEvent("inventory:server:OpenInventory")
                 end
             end    
@@ -327,6 +310,7 @@ RegisterNUICallback('Notify', function(data, cb)
 end)
 
 RegisterNetEvent("inventory:client:OpenInventory", function(PlayerAmmo, inventory, other)
+    TriggerScreenblurFadeIn(1000)
     if not IsEntityDead(PlayerPedId()) then
         ToggleHotbar(false)
         SetNuiFocus(true, true)
@@ -384,7 +368,8 @@ end)
 
 
 
-RegisterNetEvent("inventory:client:CraftItems", function(itemName, itemCosts, amount, toSlot, points)
+RegisterNetEvent('inventory:client:CraftItems', function(itemName, itemCosts, amount, toSlot, points)
+    local ped = PlayerPedId()
     SendNUIMessage({
         action = "close",
     })
@@ -399,18 +384,19 @@ RegisterNetEvent("inventory:client:CraftItems", function(itemName, itemCosts, am
 		anim = "fixing_a_player",
 		flags = 16,
 	}, {}, {}, function() -- Done
-		StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
+		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
         TriggerServerEvent("inventory:server:CraftItems", itemName, itemCosts, amount, toSlot, points)
         TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[itemName], 'add')
         isCrafting = false
 	end, function() -- Cancel
-		StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
-        QBCore.Functions.Notify("Failed!", "error")
+		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
+        QBCore.Functions.Notify("Failed", "error")
         isCrafting = false
 	end)
 end)
 
 RegisterNetEvent('inventory:client:CraftAttachment', function(itemName, itemCosts, amount, toSlot, points)
+    local ped = PlayerPedId()
     SendNUIMessage({
         action = "close",
     })
@@ -425,13 +411,13 @@ RegisterNetEvent('inventory:client:CraftAttachment', function(itemName, itemCost
 		anim = "fixing_a_player",
 		flags = 16,
 	}, {}, {}, function() -- Done
-		StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
+		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
         TriggerServerEvent("inventory:server:CraftAttachment", itemName, itemCosts, amount, toSlot, points)
         TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[itemName], 'add')
         isCrafting = false
 	end, function() -- Cancel
-		StopAnimTask(PlayerPedId(), "mini@repair", "fixing_a_player", 1.0)
-        QBCore.Functions.Notify("Failed!", "error")
+		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
+        QBCore.Functions.Notify("Failed", "error")
         isCrafting = false
 	end)
 end)
@@ -471,11 +457,11 @@ RegisterNetEvent("inventory:client:UseWeapon", function(weaponData, shootbool)
         currentWeapon = nil
         TriggerEvent('qb-hud:client:ToggleWeaponMode', false)  
         TriggerEvent('inventory:client:WeaponHolster', weaponData, "weapon_unarmed")
-    elseif weaponName == "weapon_stickybomb" then
+    elseif weaponName == "weapon_stickybomb" or weaponName == "weapon_pipebomb" or weaponName == "weapon_smokegrenade" or weaponName == "weapon_flare" or weaponName == "weapon_proxmine" or weaponName == "weapon_ball"  or weaponName == "weapon_molotov" or weaponName == "weapon_grenade" or weaponName == "weapon_bzgas" then
         GiveWeaponToPed(ped, GetHashKey(weaponName), 1, false, false)
         SetPedAmmo(ped, GetHashKey(weaponName), 1)
         SetCurrentPedWeapon(ped, GetHashKey(weaponName), true)
-        TriggerServerEvent('QBCore:Server:RemoveItem', weaponName, 1)
+        -- TriggerServerEvent('QBCore:Server:RemoveItem', weaponName, 1)
         TriggerEvent('weapons:client:SetCurrentWeapon', weaponData, shootbool)
         currentWeapon = weaponName
         TriggerEvent('qb-hud:client:ToggleWeaponMode', true)  
@@ -540,20 +526,21 @@ RegisterNUICallback('GetWeaponData', function(data, cb)
 end)
 
 RegisterNUICallback('RemoveAttachment', function(data, cb)
+    local ped = PlayerPedId()
     local WeaponData = QBCore.Shared.Items[data.WeaponData.name]
     local Attachment = WeaponAttachments[WeaponData.name:upper()][data.AttachmentData.attachment]
-    
+
     QBCore.Functions.TriggerCallback('weapons:server:RemoveAttachment', function(NewAttachments)
         if NewAttachments ~= false then
             local Attachies = {}
-            RemoveWeaponComponentFromPed(PlayerPedId(), GetHashKey(data.WeaponData.name), GetHashKey(Attachment.component))
+            RemoveWeaponComponentFromPed(ped, GetHashKey(data.WeaponData.name), GetHashKey(Attachment.component))
             for k, v in pairs(NewAttachments) do
                 for wep, pew in pairs(WeaponAttachments[WeaponData.name:upper()]) do
                     if v.component == pew.component then
-                        table.insert(Attachies, {
+                        Attachies[#Attachies+1] = {
                             attachment = pew.item,
                             label = pew.label,
-                        })
+                        }
                     end
                 end
             end
@@ -563,7 +550,7 @@ RegisterNUICallback('RemoveAttachment', function(data, cb)
             }
             cb(DJATA)
         else
-            RemoveWeaponComponentFromPed(PlayerPedId(), GetHashKey(data.WeaponData.name), GetHashKey(Attachment.component))
+            RemoveWeaponComponentFromPed(ped, GetHashKey(data.WeaponData.name), GetHashKey(Attachment.component))
             cb({})
         end
     end, data.AttachmentData, data.WeaponData)
@@ -597,9 +584,8 @@ RegisterNetEvent('inventory:client:RemoveDropItem', function(dropId)
     DropsNear[dropId] = nil
 end)
 
-RegisterNetEvent("inventory:client:DropItemAnim", function()
+RegisterNetEvent('inventory:client:DropItemAnim', function()
     local ped = PlayerPedId()
-
     SendNUIMessage({
         action = "close",
     })
@@ -610,7 +596,7 @@ RegisterNetEvent("inventory:client:DropItemAnim", function()
     TaskPlayAnim(ped, "pickup_object" ,"pickup_low" ,8.0, -8.0, -1, 1, 0, false, false, false )
     Wait(2000)
     ClearPedTasks(ped)
-end) 
+end)
 
 RegisterNetEvent("inventory:client:showWeaponLicense", function(sourceId, citizenid, character)
     local sourcePos = GetEntityCoords(GetPlayerPed(GetPlayerFromServerId(sourceId)), false)
@@ -920,8 +906,7 @@ end
 --     return object
 -- end
 
-RegisterNetEvent('inventory:client:OpenVendingMachine')
-AddEventHandler('inventory:client:OpenVendingMachine', function()
+RegisterNetEvent('inventory:client:OpenVendingMachine', function()
     local ShopItems = {}
     local num = math.random(1, 99)
     ShopItems.label = "Vending Machine "..num
@@ -930,8 +915,7 @@ AddEventHandler('inventory:client:OpenVendingMachine', function()
     TriggerServerEvent("inventory:server:OpenInventory", "shop", "Vendingshop_"..num, ShopItems)
 end)
 
-RegisterNetEvent('inventory:client:OpenWaterMachine')
-AddEventHandler('inventory:client:OpenWaterMachine', function()
+RegisterNetEvent('inventory:client:OpenWaterMachine', function()
     local ShopItems = {}
     local num = math.random(1, 99)
     ShopItems.label = "Water Machine "..num
@@ -940,8 +924,7 @@ AddEventHandler('inventory:client:OpenWaterMachine', function()
     TriggerServerEvent("inventory:server:OpenInventory", "shop", "Vendingshop_"..num, ShopItems)
 end)
 
-RegisterNetEvent('inventory:client:OpenCoffeeMachine')
-AddEventHandler('inventory:client:OpenCoffeeMachine', function()
+RegisterNetEvent('inventory:client:OpenCoffeeMachine', function()
     local ShopItems = {}
     local num = math.random(1, 99)
     ShopItems.label = "Coffee Machine "..num
@@ -950,8 +933,7 @@ AddEventHandler('inventory:client:OpenCoffeeMachine', function()
     TriggerServerEvent("inventory:server:OpenInventory", "shop", "Vendingshop_"..num, ShopItems)
 end)
 
-RegisterNetEvent('inventory:client:OpenSodaMachine')
-AddEventHandler('inventory:client:OpenSodaMachine', function()
+RegisterNetEvent('inventory:client:OpenSodaMachine', function()
     local ShopItems = {}
     local num = math.random(1, 99)
     ShopItems.label = "Soda Machine "..num
@@ -960,8 +942,7 @@ AddEventHandler('inventory:client:OpenSodaMachine', function()
     TriggerServerEvent("inventory:server:OpenInventory", "shop", "Vendingshop_"..num, ShopItems)
 end)
 
-RegisterNetEvent('inventory:client:openBurgerStorage')
-AddEventHandler('inventory:client:openBurgerStorage', function()
+RegisterNetEvent('inventory:client:openBurgerStorage', function()
     local ShopItems = {}
     ShopItems.label = "Burgershot"
     ShopItems.items = Config.BurgerShotStorage
@@ -977,8 +958,7 @@ function closeInventoryOpenStash()
     Wait (270)
 end
 
-RegisterNetEvent('qb-items:client:use:duffel-bag')
-AddEventHandler('qb-items:client:use:duffel-bag', function(BagId)
+RegisterNetEvent('qb-items:client:use:duffel-bag', function(BagId)
 	local player = PlayerPedId()
 	if not clothingitem then 
     QBCore.Functions.Progressbar("use_bag", "Putting on Bag", 2000, false, true, {
@@ -1009,16 +989,14 @@ AddEventHandler('qb-items:client:use:duffel-bag', function(BagId)
 	Wait(1000)
 end) 
 
-RegisterNetEvent('qb-items:client:use:murder-meal')
-AddEventHandler('qb-items:client:use:murder-meal', function(MealId)
+RegisterNetEvent('qb-items:client:use:murder-meal', function(MealId)
     closeInventoryOpenStash()
 	TriggerServerEvent("inventory:server:OpenInventory", "stash", 'meal_'..MealId, {maxweight = 20000, slots = 5})
 	TriggerEvent("inventory:client:SetCurrentStash", 'meal_'..MealId) 
 
 end) 
 
-RegisterNetEvent('inventory:client:OpenDumpster')
-AddEventHandler('inventory:client:OpenDumpster', function()
+RegisterNetEvent('inventory:client:OpenDumpster', function()
     -- local DumpsterFound = ClosestContainer()
     -- local Dumpster = 'Dumpster | '..math.floor(DumpsterFound.x).. ' | '..math.floor(DumpsterFound.y)..' |'
     -- TriggerServerEvent("inventory:server:OpenInventory", "stash", Dumpster, {maxweight = 1000000, slots = 15})
@@ -1026,8 +1004,7 @@ AddEventHandler('inventory:client:OpenDumpster', function()
     QBCore.Functions.Notify("Open inventory right next to dumpster to access!", "error")
 end) 
 
-RegisterNetEvent('inventory:client:OpenBin')
-AddEventHandler('inventory:client:OpenBin', function()
+RegisterNetEvent('inventory:client:OpenBin', function()
     -- local BinFound = ClosestGarbageBin()
     -- local GarbageBin = 'Garbage Bin | '..math.floor(BinFound.x).. ' | '..math.floor(BinFound.y)..' |'
     -- TriggerServerEvent("inventory:server:OpenInventory", "stash", GarbageBin, {maxweight = 1000000, slots = 15})
@@ -1051,3 +1028,19 @@ function playAnim(animDict, animName, duration)
     TaskPlayAnim(PlayerPedId(), animDict, animName, 1.0, -1.0, duration, 49, 1, false, false, false)
     RemoveAnimDict(animDict)
 end
+
+-- CloseInventory very rare if scuff 
+RegisterCommand('closeinv', function()
+	exports['textUi']:DrawTextUi('show', "Closing Inventory ")
+    Wait(1000)
+	exports['textUi']:DrawTextUi('show', "Closing Inventory .")
+    Wait(1000)
+	exports['textUi']:DrawTextUi('show', "Closing Inventory ..")
+    Wait(1000)
+    SendNUIMessage({
+        action = "close",
+    })
+	exports['textUi']:DrawTextUi('show', "Inventory Closed")
+    Wait(1000)
+    exports['textUi']:DrawTextUi('hide')
+end, false)
