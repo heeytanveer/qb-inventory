@@ -21,10 +21,11 @@
 <body style="background-color: rgba(0,0,0,0); font-family: 'Roboto', sans-serif !important;">
     <div id="qbus-inventory">
         <div class="inventory-info">
+            <div class="player-inventory-bg"></div>
+            <div class="other-inventory-bg"></div>
             <div class="player-inv-info">
-                <span id="player-inv-label">Player Inventory</span><br>
-                <!-- <img style="margin-top:0.4%;width:3%;left:0px;position:absolute;display:left" src="images/weight.png"> -->
-                <div style="width:104%">
+                <span id="player-inv-label"></span><br>
+                <div style="width: 53.5vh; margin-left: 0.2vh;">
                     <div id="progressbar">
                         <div class="progress-player"></div>
                     </div>
@@ -33,8 +34,7 @@
             </div>
             <div class="other-inv-info">
                 <span id="other-inv-label"></span><br>
-                <!-- <img style="margin-top:0.4%;width:3%;left:0px;position:absolute;display:left" src="images/weight.png"> -->
-                <div style="width:95%">
+                <div style="width: 53.7vh; margin-left: 0.2vh;">
                     <div id="progressbar-other">
                         <div class="progress-other"></div>
                     </div>
@@ -42,7 +42,6 @@
                 <span id="other-inv-weight"></span>
             </div>
         </div>
-
 
         <div class="inv-container">
             <div class="ply-inv-container">
@@ -55,32 +54,27 @@
                     <button id="reset" class="reset">Reset Number</button>
                     <input type="number" id="item-amount" class="inv-option-item" min=0 value="0"
                         oninput="validity.valid||(value='');" onclick="this.select();"></input>
-                    <img src="images/use.png" class="use" id="item-use" />
+                    <div id="item-use" class="use">Use</div>
                     </br></br>
-                    <!-- <img src="images/close.png" id="close-ui" class='closeUi' onclick="closeInventory()" /> -->
-                    <img src="images/close.png" id="close-ui" class='closeUi'
-                        onclick="closeInventory(); $('.tooltip').remove()"
-                        onmouseover="$(this).attr('title', 'Close Inventory').tooltip()" />
-
-                    <div id="item-give" class='give'>GIVE</div>
-                    <!-- <div style="height: 100%;background-color:#30475e;margin-top:150%" class="inv-option-item" id="weapon-attachments"><p>ATTACHMENTS</p></div> DontUse-ClickWeaponInstead -->
-
+                    <div id="close-ui" class="closeUi" onclick="closeInventory();">Close</div>
                     <div class="bottom-buttons">
+                        <span class="bottom-button settings-button" onclick="openHudMenu()">
+                            ⚙️
+                        </span>
                         <span class="bottom-button help-button"
                             onmouseover="$('.help-menu').fadeIn(370); $('.other-inventory').fadeOut();"
                             onmouseout="$('.help-menu').fadeOut(370); $('.other-inventory').fadeIn();">
-                            <i class="las la-info-circle"></i>
+                            ?
                         </span>
-
-                        <span class="bottom-button settings-button" onclick="openHudMenu()">
-                            <i class="las la-cog"></i>
-                        </span>
-
-                        <span class="bottom-button clothing-button" id="clothing-menu">
-                            <i class="las la-tshirt"></i>
-                        </span>
+                        <!-- <span class="bottom-button clothing-button" id="clothing-menu">
+                            C
+                        </span> -->
                     </div>
 
+
+
+                    <!-- Active but Unused -->
+                    <!-- <div id="item-give" class='give'>Give</div> -->
                 </div>
             </div>
             <div class="oth-inv-container">
@@ -130,7 +124,7 @@
                     <!-- <button type="button" onclick="$('.help-menu').fadeOut(); $('.other-inventory').fadeIn();">Close</button> -->
                 </div>
 
-                <div class="cloth" style="right:18%;position:absolute;top:30%">
+                <div class="cloth" style="position:absolute; right:18%; top:26vh">
                     <img id="top" src="cloth/shirt.svg" onmouseover="$(this).attr('title', 'T-Shirt').tooltip()" />
                     <br>
                     <img id="vest" src="cloth/vest.svg" onmouseover="$(this).attr('title', 'Vest').tooltip()" />
