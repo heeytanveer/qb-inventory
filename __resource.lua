@@ -4,7 +4,7 @@ description 'QBinvenotry'
 
 shared_scripts {
 	'config.lua',
-	'@qb-core/import.lua',
+	--'@qb-core/import.lua',
 	'@qb-weapons/config.lua'
 }
 
