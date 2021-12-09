@@ -2,6 +2,7 @@ Config = {}
 
 
 Config.playerammo = false  -- disable player ammo from being fetched from database
+Config.weaponHolster = false -- [true = allows built-in weapon holster] [false = disables built-in weapon holster] 
 
 Config.MaxInventorySlots = 41
 
