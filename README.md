@@ -4,11 +4,11 @@
 |----|
 
 ## Info
-**[edited qb-weapons](https://github.com/dojwun/qb-weapons)** [W.I.P]
-- Mostly used for getting ammo values in qb-inventory tool tip
 
-**[dp-clothing](https://github.com/andristum/dpclothing)**
-- dp-clothing is required for clothing to work properly 
+- **[edited qb-weapons [W.I.P]](https://github.com/dojwun/qb-weapons)**  Mostly used for getting ammo values in qb-inventory tool tip
+
+
+- **[dp-clothing](https://github.com/andristum/dpclothing)** is required for clothing-menu in **[3.0 reskin](https://i.imgur.com/ZA393yr.png)** to work properly 
 
 
 
@@ -36,5 +36,10 @@
 ![General](https://i.imgur.com/ZA393yr.png)
 
 ## 3.5 Reskin
+![ItemBoxes](https://i.imgur.com/BlUvpQi.png)
+![Hotbar](https://i.imgur.com/oi5Vaw3.png)
+![Main](https://i.imgur.com/umPO1Zb.png)
 
-![General](https://i.imgur.com/hqE0Joe.png)
+
+
+
