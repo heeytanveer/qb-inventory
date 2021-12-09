@@ -29,10 +29,12 @@
 
 ## Showcase
 
-**[Video](https://streamable.com/5tpgg0)**
+**[Video-OUTDATED](https://streamable.com/5tpgg0)**
+
+## 3.0 Reskin
 
 ![General](https://i.imgur.com/ZA393yr.png)
 
-## 3.5 Reskin Coming Soon
+## 3.5 Reskin
 
 ![General](https://i.imgur.com/hqE0Joe.png)
