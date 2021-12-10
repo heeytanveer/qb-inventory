@@ -6,6 +6,12 @@ Config.weaponHolster = false -- [true = allows built-in weapon holster] [false =
 
 Config.MaxInventorySlots = 41
 
+Config.SettingsButton = {
+    menu = false, 
+    message = "Settings is disabled, please check config" --[menu = false]
+    trigger = "lj-hudmenu:open", --[menu = true]
+}
+
 Config.MaximumAmmoValues = { ["pistol"] = 250, ["smg"] = 250, ["shotgun"] = 200, ["rifle"] = 250 }
 
 Config.VendingMachine = {
