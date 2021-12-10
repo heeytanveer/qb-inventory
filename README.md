@@ -3,6 +3,8 @@
 | If you are intested in recieving github updates join the community on **[Discord](https://discord.gg/NVsaunpesE)**! |
 |----|
 
+*Fan-made re-skin... isnt hard to do.. PS. dont share this within the LAB 💩* 
+
 # Showcase
 
 **[Video-OUTDATED](https://streamable.com/5tpgg0)**
