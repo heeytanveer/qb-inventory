@@ -8,7 +8,7 @@ Config.MaxInventorySlots = 41
 
 Config.SettingsButton = {
     enablemenu = true,
-    enablemessage = true
+    enablemessage = false,
     trigger = "lj-hudmenu:open",
     message = "Settings is disabled, please check config",
 }
