@@ -958,7 +958,11 @@ RegisterNetEvent('inventory:client:OpenBin', function()
 end)
 
 RegisterNUICallback('OpenHudMenu', function()
-    TriggerEvent("doj:client:OpenHudMenu")
+        if Config.SettingsButton.menu then 
+        TriggerEvent(Config.SettingsButton.trigger) 
+    else
+        QBCore.Functions.Notify(Config.SettingsButton.message, "error")
+    end
 end)
 
 RegisterNetEvent('InventoryAnim', function()
