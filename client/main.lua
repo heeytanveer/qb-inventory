@@ -320,7 +320,7 @@ RegisterNetEvent("inventory:client:OpenInventory", function(PlayerAmmo, inventor
         SendNUIMessage({
             action = "open",
             inventory = inventory,
-            slots = Config.MaxInventorySlots,
+            slots = MaxInventorySlots,
             other = other,
             maxweight = QBCore.Config.Player.MaxWeight,
             Ammo = PlayerAmmo,
@@ -335,7 +335,7 @@ RegisterNetEvent("inventory:client:UpdatePlayerInventory", function(isError)
         action = "update",
         inventory = QBCore.Functions.GetPlayerData().items,
         maxweight = QBCore.Config.Player.MaxWeight,
-        slots = Config.MaxInventorySlots,
+        slots = MaxInventorySlots,
         error = isError,
     })
 end)
