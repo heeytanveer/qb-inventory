@@ -367,61 +367,6 @@ RegisterNetEvent("inventory:client:ShowTrunkPos", function()
 end)
 
 
-
-RegisterNetEvent('inventory:client:CraftItems', function(itemName, itemCosts, amount, toSlot, points)
-    local ped = PlayerPedId()
-    SendNUIMessage({
-        action = "close",
-    })
-    isCrafting = true
-    QBCore.Functions.Progressbar("repair_vehicle", "Crafting..", (math.random(2000, 5000) * amount), false, true, {
-		disableMovement = true,
-		disableCarMovement = true,
-		disableMouse = false,
-		disableCombat = true,
-	}, {
-		animDict = "mini@repair",
-		anim = "fixing_a_player",
-		flags = 16,
-	}, {}, {}, function() -- Done
-		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
-        TriggerServerEvent("inventory:server:CraftItems", itemName, itemCosts, amount, toSlot, points)
-        TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[itemName], 'add')
-        isCrafting = false
-	end, function() -- Cancel
-		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
-        QBCore.Functions.Notify("Failed", "error")
-        isCrafting = false
-	end)
-end)
-
-RegisterNetEvent('inventory:client:CraftAttachment', function(itemName, itemCosts, amount, toSlot, points)
-    local ped = PlayerPedId()
-    SendNUIMessage({
-        action = "close",
-    })
-    isCrafting = true
-    QBCore.Functions.Progressbar("repair_vehicle", "Crafting..", (math.random(2000, 5000) * amount), false, true, {
-		disableMovement = true,
-		disableCarMovement = true,
-		disableMouse = false,
-		disableCombat = true,
-	}, {
-		animDict = "mini@repair",
-		anim = "fixing_a_player",
-		flags = 16,
-	}, {}, {}, function() -- Done
-		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
-        TriggerServerEvent("inventory:server:CraftAttachment", itemName, itemCosts, amount, toSlot, points)
-        TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items[itemName], 'add')
-        isCrafting = false
-	end, function() -- Cancel
-		StopAnimTask(ped, "mini@repair", "fixing_a_player", 1.0)
-        QBCore.Functions.Notify("Failed", "error")
-        isCrafting = false
-	end)
-end)
-
 RegisterNetEvent('inventory:client:PickupSnowballs', function()
     local ped = PlayerPedId()
     LoadAnimDict('anim@mp_snowball')
@@ -434,7 +379,7 @@ RegisterNetEvent('inventory:client:PickupSnowballs', function()
     }, {}, {}, {}, function() -- Done
         ClearPedTasks(ped)
         TriggerServerEvent('QBCore:Server:AddItem', "snowball", 1)
-        TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items["snowball"], "add")
+        TriggerEvent('inventory:client:ItemBox', QBCore.Shared.Items["snowball"], "add", 1)
     end, function() -- Cancel
         ClearPedTasks(ped)
         QBCore.Functions.Notify("Canceled", "error")
