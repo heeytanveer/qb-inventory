@@ -958,12 +958,16 @@ RegisterNetEvent('inventory:client:OpenBin', function()
 end)
 
 RegisterNUICallback('OpenHudMenu', function()
-        if Config.SettingsButton.menu then 
+    if Config.SettingsButton.enablemenu then 
         TriggerEvent(Config.SettingsButton.trigger) 
     else
-        QBCore.Functions.Notify(Config.SettingsButton.message, "error")
+        if Config.SettingsButton.enablemessage then
+            QBCore.Functions.Notify(Config.SettingsButton.message, "error")
+        else
+            -- do nothing
+        end
     end
-end)
+end) 
 
 RegisterNetEvent('InventoryAnim', function()
     playAnim("pickup_object", "putdown_low", 1000)
