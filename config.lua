@@ -4,7 +4,6 @@ Config = {}
 Config.playerammo = false  -- disable player ammo from being fetched from database
 Config.weaponHolster = false -- [true = allows built-in weapon holster] [false = disables built-in weapon holster] 
 
-Config.MaxInventorySlots = 41
 
 Config.SettingsButton = {
     enablemenu = true,
@@ -13,7 +12,7 @@ Config.SettingsButton = {
     message = "Settings is disabled, please check config",
 }
 
-
+MaxInventorySlots = 41
 Config.MaximumAmmoValues = { ["pistol"] = 250, ["smg"] = 250, ["shotgun"] = 200, ["rifle"] = 250 }
 
 Config.VendingMachine = {
