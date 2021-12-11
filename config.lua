@@ -8,7 +8,7 @@ Config.weaponHolster = false -- [true = allows built-in weapon holster] [false =
 Config.SettingsButton = {
     enablemenu = true,
     enablemessage = false,
-    trigger = "lj-hudmenu:open",
+    command = "menu",
     message = "Settings is disabled, please check config",
 }
 
