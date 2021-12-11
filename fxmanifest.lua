@@ -1,11 +1,12 @@
-resource_manifest_version "44febabe-d386-4d18-afbe-5e627f4af937"
+fx_version 'adamant'
 
-description 'QBinvenotry'
+game 'gta5'
+
+description 'QBinvenotry NoPixel reskin by </dojwun>#2103'
 
 shared_scripts {
 	'config.lua',
-	--'@qb-core/import.lua',
-	'@qb-weapons/config.lua'
+	'@qb-weapons/config.lua' 
 }
 
 server_script 'server/main.lua'
