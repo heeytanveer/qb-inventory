@@ -27,17 +27,6 @@
 
 ### Settings Button Info
 - Currently the "⚙️" button is set-up to use **[lj-menu](https://github.com/loljoshie/lj-menu)**
-- if you would like to trigger the event peoperly add this to lj-menu/client.lua
-```
-RegisterNetEvent("lj-hudmenu:open", function()
-    Wait(50)
-    if not showMenu then
-        SetNuiFocus(true, true)
-        SendNUIMessage({ action = "open"}) 
-        showMenu = true
-    end
-end)
-```
 - You also have the option to trigger your own event or just disable the button in the **[config](https://i.imgur.com/Zp1yszj.png)**
 
 # Common "errors"
