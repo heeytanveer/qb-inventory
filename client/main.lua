@@ -959,7 +959,7 @@ end)
 
 RegisterNUICallback('OpenHudMenu', function()
     if Config.SettingsButton.enablemenu then 
-        TriggerEvent(Config.SettingsButton.trigger) 
+        ExecuteCommand(Config.SettingsButton.command) 
     else
         if Config.SettingsButton.enablemessage then
             QBCore.Functions.Notify(Config.SettingsButton.message, "error")
