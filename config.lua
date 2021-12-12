@@ -10,6 +10,7 @@ Config.SettingsButton = {
     enablemessage = false,
     command = "menu",
     message = "Settings is disabled, please check config",
+    
 }
 
 MaxInventorySlots = 41
