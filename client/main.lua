@@ -782,6 +782,7 @@ RegisterNUICallback("CloseInventory", function(data, cb)
         CurrentStash = nil
         SetNuiFocus(false, false)
         inInventory = false
+        TriggerScreenblurFadeOut(1000)
         ClearPedTasks(PlayerPedId())
         return
     end
