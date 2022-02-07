@@ -24,7 +24,7 @@ local function SaveStashItems(stashId, items)
 			for slot, item in pairs(items) do
 				item.description = nil
 			end
-			exports.oxmysql:insert('INSERT INTO stashitems (stash, items) VALUES (:stash, :items) ON DUPLICATE KEY UPDATE items = :items', {
+			MySQL.insert('INSERT INTO stashitems (stash, items) VALUES (:stash, :items) ON DUPLICATE KEY UPDATE items = :items', {
 				['stash'] = stashId,
 				['items'] = json.encode(items)
 			})
@@ -105,7 +105,7 @@ local function hasCraftItems(source, CostItems, amount)
 end
 
 local function IsVehicleOwned(plate)
-    local result = exports.oxmysql:scalarSync('SELECT 1 from player_vehicles WHERE plate = ?', {plate})
+    local result = MySQL.scalar.await('SELECT 1 from player_vehicles WHERE plate = ?', {plate})
     if result then return true else return false end
 end
 
@@ -147,7 +147,7 @@ end
 -- Stash Items
 local function GetStashItems(stashId)
 	local items = {}
-	local result = exports.oxmysql:fetchSync('SELECT items FROM stashitems WHERE stash = ?', {stashId})
+	local result = MySQL.query.await('SELECT items FROM stashitems WHERE stash = ?', {stashId})
 	if result[1] ~= nil then 
 		if result[1].items ~= nil then
 			result[1].items = json.decode(result[1].items)
@@ -196,7 +196,7 @@ end
 -- Trunk items
 local function GetOwnedVehicleItems(plate)
 	local items = {}
-	local result = exports.oxmysql:fetchSync('SELECT items FROM trunkitems WHERE plate = ?', {plate})
+	local result = MySQL.query.await('SELECT items FROM trunkitems WHERE plate = ?', {plate})
 	if result[1] ~= nil then
 		if result[1].items ~= nil then
 			result[1].items = json.decode(result[1].items)
@@ -229,7 +229,7 @@ local function SaveOwnedVehicleItems(plate, items)
 			for slot, item in pairs(items) do
 				item.description = nil
 			end
-			exports.oxmysql:insert('INSERT INTO trunkitems (plate, items) VALUES (:plate, :items) ON DUPLICATE KEY UPDATE items = :items', {
+			MySQL.insert('INSERT INTO trunkitems (plate, items) VALUES (:plate, :items) ON DUPLICATE KEY UPDATE items = :items', {
 				['plate'] = plate,
 				['items'] = json.encode(items)
 			})
@@ -319,7 +319,7 @@ end
 -- Glovebox items
 local function GetOwnedVehicleGloveboxItems(plate)
 	local items = {}
-	local result = exports.oxmysql:fetchSync('SELECT items FROM gloveboxitems WHERE plate = ?', {plate})
+	local result = MySQL.query.await('SELECT items FROM gloveboxitems WHERE plate = ?', {plate})
 	if result[1] ~= nil then 
 		if result[1].items ~= nil then
 			result[1].items = json.decode(result[1].items)
@@ -352,7 +352,7 @@ local function SaveOwnedGloveboxItems(plate, items)
 			for slot, item in pairs(items) do
 				item.description = nil
 			end
-			exports.oxmysql:insert('INSERT INTO gloveboxitems (plate, items) VALUES (:plate, :items) ON DUPLICATE KEY UPDATE items = :items', {
+			MySQL.insert('INSERT INTO gloveboxitems (plate, items) VALUES (:plate, :items) ON DUPLICATE KEY UPDATE items = :items', {
 				['plate'] = plate,
 				['items'] = json.encode(items)
 			})
@@ -652,7 +652,7 @@ RegisterNetEvent('inventory:server:OpenInventory', function(name, id, other)
 	local PlayerAmmo = {}
 
 	if Config.playerammo then 
-		exports.oxmysql:execute("SELECT * FROM `playerammo` WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'", function(ammo)
+		MySQL.update("SELECT * FROM `playerammo` WHERE `citizenid` = '"..Player.PlayerData.citizenid.."'", function(ammo)
 			if ammo[1] ~= nil then
 				PlayerAmmo = json.decode(ammo[1].ammo)
 			end
@@ -925,7 +925,7 @@ RegisterNetEvent('inventory:server:UseItem', function(inventory, item)
 end)
 
 RegisterNetEvent('qb-inventory:server:SaveStashItems', function(stashId, items)
-    exports.oxmysql:insert('INSERT INTO stashitems (stash, items) VALUES (:stash, :items) ON DUPLICATE KEY UPDATE items = :items', {
+    MySQL.insert('INSERT INTO stashitems (stash, items) VALUES (:stash, :items) ON DUPLICATE KEY UPDATE items = :items', {
         ['stash'] = stashId,
         ['items'] = json.encode(items)
     })
