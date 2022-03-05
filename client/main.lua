@@ -38,6 +38,15 @@ local function FormatWeaponAttachments(itemdata)
     return attachments
 end
 
+local function IsBackEngine(vehModel)
+    for _, model in pairs(BackEngineVehicles) do
+        if GetHashKey(model) == vehModel then
+            return true
+        end
+    end
+    return false
+end
+
 local function OpenTrunk()
     local vehicle = QBCore.Functions.GetClosestVehicle()
     while (not HasAnimDictLoaded("amb@prop_human_bum_bin@idle_b")) do
@@ -64,15 +73,6 @@ local function CloseTrunk()
     else
         SetVehicleDoorShut(vehicle, 5, false)
     end
-end
-
-local function IsBackEngine(vehModel)
-    for _, model in pairs(BackEngineVehicles) do
-        if GetHashKey(model) == vehModel then
-            return true
-        end
-    end
-    return false
 end
 
 local function ToggleHotbar(toggle)
@@ -782,6 +782,7 @@ RegisterNUICallback("CloseInventory", function(data, cb)
         CurrentStash = nil
         SetNuiFocus(false, false)
         inInventory = false
+        TriggerScreenblurFadeOut(1000)
         ClearPedTasks(PlayerPedId())
         return
     end

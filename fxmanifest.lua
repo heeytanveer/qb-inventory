@@ -1,4 +1,4 @@
-fx_version 'adamant'
+fx_version 'cerulean'
 
 game 'gta5'
 
@@ -9,7 +9,11 @@ shared_scripts {
 	'@qb-weapons/config.lua' 
 }
 
-server_script 'server/main.lua'
+server_script {
+ 'server/main.lua',
+ '@oxmysql/lib/MySQL.lua'
+}
+
 client_scripts {
 	'client/*.lua'
 } 
